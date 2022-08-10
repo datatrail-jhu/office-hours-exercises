@@ -1,0 +1,91 @@
+---
+title: "File Organization Exercise"
+author: "Candace"
+date: '2022-08-04'
+output: html_document
+---
+
+This exercise corresponds to the [File Organization course in DataTrail](https://datatrail-jhu.github.io/03_fileorganization/setting-up-data-science-project-folders.html). 
+
+Note how I just made a link above. I used brackets to put a name for the link, followed by parantheses with the link that I want inside there. 
+
+In my RMarkdown I can have notes in between my code. 
+
+To make code chunks I can type the below by hand: 
+
+```{r}
+```
+
+Or I can use +chunk button on the RStudio menu. 
+
+## Install packages 
+
+I should install whatever packages my R Markdown needs first. 
+
+For this one, we only need `readr`. So here's how I install it. 
+
+```{r}
+install.packages("readr")
+```
+
+To use this package I need to use `library()` first though. 
+
+```{r}
+library(readr) 
+```
+
+In my files pane, I need to have the following folders: 
+- `code` 
+- `data`
+- `figures`
+- `products`
+
+To check that these folders exist, I am going to use the `dir()` function. 
+
+```{r}
+dir()
+```
+
+
+Hopefully the names of the folders I listed above printed out here. 
+
+If I want to know whats in a folder. I can use this `dir()` function again but put the name of a folder **in quotes**.
+
+```{r}
+# What is in the data folder? This code line below will print that out
+dir("data")
+```
+
+The file I want to read in is called "git_project.csv" and its located in my "data" folder. 
+
+Let me try to read that in:
+
+```{r}
+# Reading in a CSV (but I'm not assigning it as anything yet)
+read_csv("data/git_project.csv")
+```
+
+Now I'm going to read this in again but I'm going to assign it (by using `<-`) to be called `music_data`. 
+
+```{r}
+music_data <- read_csv("data/git_project.csv")
+```
+
+Now I will see it show up in my environment panel (in the upper right corner). 
+
+I can also use `View()` to have it pop up in a window so I can see these data. (but I can put that in this R Markdown document). I can type `View(music_data)` in the Console window though. 
+
+If I want images to show up in my notebook I can do a similar thing that I did for links. I can use brackets followed by parantheses. But I have to point to where I have the image file. 
+
+In this instance, I have an image file called `chubby_checker.jpg` that's located in the `figures` folder. So I can do the below thing:
+
+[Album image](figures/chubby_checker.jpg)
+
+
+Now to render the pretty version of this RMarkdown document, I first want to save this document (Click Command + S for a shortcut). 
+Then I can click the Knit button above. (It has a yarn and knitting needle image next to it). 
+
+Note that if there are any problems with my code that my html will not print out and I'll get an error. So I'll need to fix that first. 
+
+Then it will print out a nice html. If I click that html I will see the pretty version of this document. 
+
