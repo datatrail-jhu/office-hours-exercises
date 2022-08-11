@@ -80,14 +80,24 @@ candy_df <- candy_df %>%
 top_5 <- dplyr::top_n(candy_df, 5, winpercent)
 ```
 
-11. Use the `barplot()` function to plot the candy bars' `winpercent` with their `competitorname` reported on the x axis. Hint: you'll need to use a `~` to tell your barplot how to relate your two variables. Look at the examples in `?barplot` for more details. 
+11. Use the `plot()` function to plot the candy bars' `winpercent` against their `sugarpercent`. Does it look like there is a relationship between sugariness and power ranking of candy? 
 
-Look up the arguments in the `?barplot` function and try to make your plot look a little prettier and easier to read. 
+Try using `cor.test()` function to see if there's a statistical relationship here. 
 
 ```{r}
-barplot(candy_df$winpercent~candy_df$competitorname, 
-        ylab = "Win percent", 
-        xlab = "", 
-        las = 2)
+plot(candy_df$sugarpercent, candy_df$winpercent)
+cor.test(candy_df$sugarpercent, candy_df$winpercent)
 ```
 
+What about sugar and price? 
+
+```{r}
+plot(candy_df$sugarpercent, candy_df$pricepercent)
+cor.test(candy_df$sugarpercent, candy_df$pricepercent)
+```
+What about power ranking and price? 
+
+```{r}
+plot(candy_df$winpercent, candy_df$pricepercent)
+cor.test(candy_df$winpercent, candy_df$pricepercent)
+```
