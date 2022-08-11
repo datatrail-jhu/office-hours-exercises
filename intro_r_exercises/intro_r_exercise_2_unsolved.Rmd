@@ -34,6 +34,7 @@ Hint: You may have to install the `readr` package if you don't have it installed
 ```{r}
 
 ```
+
 7. Take a look at the column descriptions of this data in the [this README in GitHub here](https://github.com/fivethirtyeight/data/tree/master/candy-power-ranking). 
 
 8. Based on the variables in this dataset, find the most expensive candy per unit. 

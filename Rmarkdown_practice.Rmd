@@ -1,0 +1,50 @@
+---
+title: "Practice RMarkdown"
+author: "Candace Savonen"
+date: '2022-08-02'
+output: html_document
+---
+
+## Practice R Markdowns
+
+Here's where I'm practicing R Markdowns.
+
+R Markdown documents are handy because they allow you to run code, see the results of that code, and take handy notes all in one spot. 
+
+Code chunks look like this:
+
+```{r}
+print("This is a code chunk")
+```
+
+When you run a code chunk, the results from the code show up below the code chunk it came from. 
+
+You can create a new code chunk by typing it by hand or by clicking the green +C button at the top of this window. 
+
+All code needs to be within code chunks to be run. Anything outside of the code chunks is notes. You use markdown language to make these notes. 
+You can read about markdown here: https://www.markdownguide.org/cheat-sheet/ 
+
+```{r}
+# This dataset is automatically loaded into R so you can play with it to practice. 
+iris
+```
+
+## Directories 
+
+In R Markdown files, your current directory (where you are doing your R code/commands) is always where your RMarkdown (Rmd) file is located. 
+
+If I use this `dir()` function it will print out the files where my current directory is, which is the same as where this R Markdown is located. 
+
+```{r}
+dir()
+```
+
+You can click the green arrows at the top right of these code chunks to run an individual code chunk. OR you can click the "Run" button at the top of this whole window if you want to run all the code chunks. 
+
+## Print out session info 
+
+Session info is a good thing to print out at the end of your notebooks so that you (and other folks) referencing your notebooks know what software versions and libraries you used to run the notebook. 
+
+```{r}
+sessionInfo()
+```
