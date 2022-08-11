@@ -1,0 +1,93 @@
+---
+title: "intro_r_exercise_2"
+author: "Candace Savonen"
+date: "2022-08-10"
+output: html_document
+---
+
+For this exercise, we are going to work with a candy dataset from FiveThirtyEight 
+
+1. There's a variety of datasets on their GitHub available as CSVs.
+[Go to the FiveThirtyEight's GitHub](https://github.com/fivethirtyeight/data)
+
+2. Scroll down to the folder of data called `candy-power-ranking`. 
+
+3. Look for the CSV in this file. It contains the data we want. Click on the file name of this CSV.
+
+4. Then click `Raw`.
+
+5. Copy and paste the URL that that brings you to.
+
+6. Use the `download.file` function to download this file to this workspace. Remember to use the Help window to look up how to use this function if you are not sure. You will need to specify an argument called `destfile` to say where you'd like to save the file and under what name (in quotes). 
+
+```{r}
+download.file("https://raw.githubusercontent.com/fivethirtyeight/data/master/candy-power-ranking/candy-data.csv",
+              destfile = "candy-data.csv")
+```
+
+6. After you've successfully downloaded this CSV to your workspace, use the `readr::read_csv()` function to read in this data file to your environment. 
+Hint: You may have to install the `readr` package if you don't have it installed in this workspace yet. 
+
+```{r}
+install.packages("readr")
+```
+
+```{r}
+candy_df <- readr::read_csv("candy-data.csv")
+```
+7. Take a look at the column descriptions of this data in the [this README in GitHub here](https://github.com/fivethirtyeight/data/tree/master/candy-power-ranking). 
+
+8. Based on the variables in this dataset, find the most expensive candy per unit. 
+
+```{r}
+library(magrittr)
+
+candy_df %>% dplyr::arrange(dplyr::desc(pricepercent))
+```
+
+9. In reality most of the variables in this dataset are logical variables but they have most likely been read in as numeric. Use the `as.logical()` function to turn the appropriate variables into logical variables.
+
+```{r}
+candy_df <- candy_df %>% 
+  dplyr::mutate(chocolate = as.logical(chocolate), 
+                fruity = as.logical(fruity), 
+                caramel = as.logical(caramel), 
+                peanutyalmondy = as.logical(peanutyalmondy), 
+                nougat = as.logical(nougat), 
+                crispedricewafer = as.logical(crispedricewafer), 
+                hard = as.logical(hard), 
+                bar = as.logical(bar), 
+                pluribus = as.logical(pluribus))
+```
+
+
+10. Use the dplyr::filter() function to look at only chocolate candies. 
+
+```{r}
+candy_df %>% dplyr::filter(chocolate)
+```
+
+10. Determine what the top 5 candy bars are according to `winpercent` variable. (There are many ways you could do this. )
+
+```{r}
+# Arrange the data.frame by top candy on the top
+candy_df <- candy_df %>% 
+  dplyr::arrange(dplyr::desc(winpercent))
+```
+
+```{r}
+# Make a new data frame with the top 5
+top_5 <- dplyr::top_n(candy_df, 5, winpercent)
+```
+
+11. Use the `barplot()` function to plot the candy bars' `winpercent` with their `competitorname` reported on the x axis. Hint: you'll need to use a `~` to tell your barplot how to relate your two variables. Look at the examples in `?barplot` for more details. 
+
+Look up the arguments in the `?barplot` function and try to make your plot look a little prettier and easier to read. 
+
+```{r}
+barplot(candy_df$winpercent~candy_df$competitorname, 
+        ylab = "Win percent", 
+        xlab = "", 
+        las = 2)
+```
+
