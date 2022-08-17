@@ -1,0 +1,124 @@
+---
+title: "Data Tidying Exercise"
+output: html_document
+date: "2022-08-17"
+---
+
+### Binding data frames
+
+It probably makes sense to combine the `champs` and `runners` datasets together into one dataframe since they have the same columns and similar information. 
+
+It is in general better when we bind two datasets to have an indicator variable that shows from which dataset each row comes from. This can be done using the `.id` argument in the `bind_rows()` function. Note that by saying `"Champion" = champs` and `"Runner" = runners` we are making the identifier equal to `Champion` for the *champs* dataframe and equal to `Runner` for the *runners* dataframe. 
+
+```{r}
+## add a column that shows champions vs. runnerups call it rank
+all_teams <- dplyr::bind_rows("Champion" = champs, "Runner" = runners, .id = "rank")
+```
+
+
+### Joining data frames
+
+Note that there's no reason we couldn't put the information in `champs` and `runners` together into one, more easily readable data frame. 
+
+The `join` functions are exactly what we can use to do that. 
+
+Use the `dplyr::full_join` function to join `champs` and `runners` together in a way that puts rows together by their `Team`. 
+
+```{r}
+## bind the two data sets together using inner_join
+all_teams <- dplyr::full_join(champs, runners, by = "Team", suffix = c("_win", "_runner"))
+```
+
+## Exercise 2: Calculating Age Based on Birthdate {-}
+
+In this exercise, your students will learn how to work with data objects. They have to combine their skills in writing functions and working with the package **lubridate**. Ask them to install and load the package **lubridate**.
+
+```{r, eval = FALSE}
+install.packages("lubridate")
+library("lubridate")
+```
+
+First, ask them to create an object called and call it `mybday` that stores their birthday.
+
+```{r}
+library(lubridate)
+mybday <- ymd("1998-09-20")
+```
+
+Note that they can also save their birthday like:
+
+```{r}
+mybday <- dmy("20-Sep-1998")
+```
+
+Now ask your students to find the function in R that returns today's date. You can ask them to google this as it's likely that the first link has the answer to their question. The function they need to use is `Sys.Date()`. Ask them to save today's date to an object called `today`.
+
+```{r}
+today <- Sys.Date()
+```
+
+The interesting thing about date objects is that we can do algebraic operations on them just like we do to numeric objects. We can add them or subtract one from another. Now, ask your studnets how they would calculate their age based on the two objects. They probably say they'd subtract `mybdat` from `today` and that's true. When they do so, they will realize the answer is in days and not in years. 
+
+```{r}
+today - mybday
+```
+
+Well, then can then easily convert the answer to years by dividing the number by 365 or they can use the function `time_length()` again from the **lubridate** package.
+
+```{r}
+time_length(today - mybday, unit = "year")
+```
+
+Now that your studetns are comfortable calculating age based on a birthdate and current date, ask them to write a function that will take a person's birthdate and will return the age in years. This should be easy given the solution above.
+
+```{r}
+age_calc <- function(bday){
+    bday = ymd(bday)
+    today = Sys.Date()
+    dif = time_length(today - bday, unit = "year")
+    return(dif)
+}
+age_calc("1982-05-10")
+```
+
+Tell your students to add a warning message that is shown to user warning them to enter date as "yyyy-md-dd". So the function should show a warning message after the calculation is done.
+
+```{r}
+age_calc <- function(bday){
+    warning("Please enter the date as 'yyyy-mm-dd'")
+    bday = ymd(bday)
+    today = Sys.Date()
+    dif = time_length(today - bday, unit = "year")
+    return(dif)
+}
+age_calc("1982-05-10")
+```
+
+Next, you can tell your students to modify the function so that the user determines whether age should be reported in years, months, days, hours, etc. In other words, the `unit` argumenst should be entered by user but its default value is in days.
+
+```{r}
+age_calc <- function(bday, unit = "day"){
+    warning("Please enter the date as 'yyyy-mm-dd'")
+    bday = ymd(bday)
+    today = Sys.Date()
+    dif = time_length(today - bday, unit = unit)
+    return(dif)
+}
+age_calc("1982-05-10", unit = "hour")
+```
+
+
+As the last step, show this function to your students and ask them to gues what the ouput will look like without running the function in R. 
+
+```{r}
+age_calc <- function(bday, unit = "day"){
+    warning("Please enter the date as 'yyyy-mm-dd'")
+    bday = ymd(bday)
+    today = Sys.Date()
+    dif = round(time_length(today - bday, unit = unit), 1)
+    print(paste("You are ", dif, " ", unit, "s ", "old", sep=""))
+}
+age_calc("1982-05-10", unit = "year")
+```
+
+

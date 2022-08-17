@@ -164,7 +164,7 @@ But, note that this will break if we don't specify any argument for `name`.
 greet()
 ```
 
-R tells us "argument "name" is missing, with no default" which is basically it saying "I needed something for `name` but I wasn't given anything so I can't run this function, greet()." 
+R tells us `argument "name" is missing, with no default` which is basically it saying "I needed something for `name` but I wasn't given anything so I can't run this function, greet()." 
 
 ### Setting defaults for arguments
 

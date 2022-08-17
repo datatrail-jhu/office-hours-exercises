@@ -1,0 +1,213 @@
+---
+title: "Data Tidying Exercise"
+output: html_document
+date: "2022-08-17"
+---
+
+## Exercise 1: Saving and reading files
+
+Saving to CSV or TSV files is generally fine, but sometimes you might have a R object that doesn't fit into a table format and you'd like to save it *exactly* how it is saved in R. 
+
+For this purpose, RDS files are a great option. If you save an R object in an RDS file, then you can read it back into your R environment and it will be exactly how you saved it. 
+
+To practice with RDS files, we can use an already existing object in R, `iris`. This dataset exists in R for practice purposes. Let's take a look at it. 
+
+```{r}
+# Print out mtcars to see what it looks like. 
+iris
+```
+
+Let's fix some things in this dataset before we save it to RDS. 
+
+Let's change column names to be in a more standard format. Instead of having the column names like `Sepal.Length`, change them to be like this: `sepal_length`. Where you've replace the `.` with an underscore `_` and turn capitalized letters into all lower 
+
+```{r}
+
+```
+
+```{r}
+saveRDS(mtcars, file = "mtcars.rds")
+```
+
+
+```{r}
+mpg <- readRDS("mtcars.rds")
+```
+
+
+Write an encoder function that takes a word from the user and encodes each character in the alphabet to the next character and returns it. e.g. "peach" will be encoded to "qfbdi"
+
+
+
+
+str_view(names, "^M")
+str_view(names, "M$")
+
+str_detect()
+str_count()
+str_subset()
+
+
+
+## Exercise 1: Tidying NBA Finals Data {-}
+
+In this exercise we will work with [NBA final teams stats](https://www.kaggle.com/daverosenman/nba-finals-team-stats) on Kaggle. There is two .csv files. The 'champs.csv' file contains game-by-game team totals for the championship team from every finals game between 1980 and 2017. The 'runnerups.csv' contains game-by-game team totals for the runner-up team from every finals game between 1980 and 2017. The 1980 NBA Finals was the first Finals series since the NBA added the three point line.
+
+This exercise is inpired by two kernells on Kaggle that can be found [here](https://www.kaggle.com/carterallen/nba-championship-data) and [here](https://www.kaggle.com/daverosenman/nba-finals-three-point-stats-1980-2017). Ask your stduent to download the data on Kaggle or on our Github repository for this guide. 
+
+<div class = "note">
+In order to download data on Kaggle, students are required to create a Kaggle account. They can do so by linking their Google account. 
+</div>
+
+
+The first step is to import the data into R. Since importing .csv files is in a future lesson, tell your students the commands the need to import the .csv files. We are going to use `read_csv` command from the **readr** package. Ask them to save the two files in two separate objects. Here we called them `champs` and `runners`. 
+
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+# importing the data
+champs <- read_csv(file = "./data/nba/championsdata.csv")
+runners <- read_csv(file = "./data/nba/runnerupsdata.csv")
+```
+
+You can ask your students to find out what column contains team names. They can go to the Kaggle [link](https://www.kaggle.com/daverosenman/nba-finals-team-stats) to find out. The column is called `Team`.
+
+Now ask them to find the *distinct* team names. The function used to find the distinct values of a variable is `distinct()`. You can either tell them the function or ask them to google and find the function themselves. Here's how they can do it in a pipe.
+
+```{r}
+## check the names, see any issue
+champs %>% 
+    select(Team) %>%
+    distinct()
+```
+
+Once your students run the code above, they will notice some peculiar values. For instance `'Heat'` and `Warriorrs`. These kind of mistakes can happen in any data analysis. Ask your students to fix the issue using a **dplyr** function. Here's how we did it using hte `iflese()` function. The line `mutate(Team = ifelse(Team == "Warriorrs","Warriors",Team))` creates a column called `Team` which is the same as the old column `Team` except whenever the value in the column is `Warriorrs` it is replaced by `Warriors`. Note that there are other ways to do this so you can ask your students to figure out a way on their own.
+
+The other fix we need to do is to convert the two columns `Win` and `Home`. Ask your students to look at the class of the two columns. They will see that the values stored in the two columns are integer. Ask them to convert those two columns to factors and save the new columns back to the columns `Win` and `Home`. Here's how to do so for both datasets.
+
+
+```{r}
+# fix the heat and warriors
+champs <- champs %>%
+    mutate(Team = ifelse(Team == "Warriorrs","Warriors",Team)) %>%
+    mutate(Team = ifelse(Team == "'Heat'","Heat",Team)) %>%
+    mutate(Win = as.factor(Win)) %>%
+    mutate(Home = as.factor(Home))
+runners <- runners %>%
+    mutate(Team = ifelse(Team == "Warriorrs","Warriors",Team)) %>%
+    mutate(Team = ifelse(Team == "'Heat'","Heat",Team)) %>%
+    mutate(Win = as.factor(Win)) %>%
+    mutate(Home = as.factor(Home))
+```
+
+Now, a good exercise would be too bind the two dataframes together. Ask your students to find the appropritate **dplyr** function for binding the rows together. Note that since the two dataframes have the same set of columns, this is easily done. They can use the function `bind_rows()` function as is in the lessons or use the base R function `row.bind()`. 
+
+
+```{r}
+## bind the two data sets together
+allteams <- bind_rows(champs,runners)
+```
+
+It is in general better when we bind two datasets to have an indicator variable that shows from which dataset each row comes from. This can be done using the `.id` argument in the `bind_rows()` function. Note that by saying `"Champion" = champs` and `"Runner" = runners` we are making the identifier equal to `Champion` for the *champs* dataframe and equal to `Runner` for the *runners* dataframe. 
+
+```{r}
+## add a column that shows champions vs. runnerups call it rank
+allteams <- bind_rows("Champion" = champs, "Runner" = runners, .id = "rank")
+```
+
+
+
+## Exercise 2: Calculating Age Based on Birthdate {-}
+
+In this exercise, your students will learn how to work with data objects. They have to combine their skills in writing functions and working with the package **lubridate**. Ask them to install and load the package **lubridate**.
+
+```{r, eval = FALSE}
+install.packages("lubridate")
+library("lubridate")
+```
+
+First, ask them to create an object called and call it `mybday` that stores their birthday.
+
+```{r}
+library(lubridate)
+mybday <- ymd("1998-09-20")
+```
+
+Note that they can also save their birthday like:
+
+```{r}
+mybday <- dmy("20-Sep-1998")
+```
+
+Now ask your students to find the function in R that returns today's date. You can ask them to google this as it's likely that the first link has the answer to their question. The function they need to use is `Sys.Date()`. Ask them to save today's date to an object called `today`.
+
+```{r}
+today <- Sys.Date()
+```
+
+The interesting thing about date objects is that we can do algebraic operations on them just like we do to numeric objects. We can add them or subtract one from another. Now, ask your studnets how they would calculate their age based on the two objects. They probably say they'd subtract `mybdat` from `today` and that's true. When they do so, they will realize the answer is in days and not in years. 
+
+```{r}
+today - mybday
+```
+
+Well, then can then easily convert the answer to years by dividing the number by 365 or they can use the function `time_length()` again from the **lubridate** package.
+
+```{r}
+time_length(today - mybday, unit = "year")
+```
+
+Now that your studetns are comfortable calculating age based on a birthdate and current date, ask them to write a function that will take a person's birthdate and will return the age in years. This should be easy given the solution above.
+
+```{r}
+age_calc <- function(bday){
+    bday = ymd(bday)
+    today = Sys.Date()
+    dif = time_length(today - bday, unit = "year")
+    return(dif)
+}
+age_calc("1982-05-10")
+```
+
+Tell your students to add a warning message that is shown to user warning them to enter date as "yyyy-md-dd". So the function should show a warning message after the calculation is done.
+
+```{r}
+age_calc <- function(bday){
+    warning("Please enter the date as 'yyyy-mm-dd'")
+    bday = ymd(bday)
+    today = Sys.Date()
+    dif = time_length(today - bday, unit = "year")
+    return(dif)
+}
+age_calc("1982-05-10")
+```
+
+Next, you can tell your students to modify the function so that the user determines whether age should be reported in years, months, days, hours, etc. In other words, the `unit` argumenst should be entered by user but its default value is in days.
+
+```{r}
+age_calc <- function(bday, unit = "day"){
+    warning("Please enter the date as 'yyyy-mm-dd'")
+    bday = ymd(bday)
+    today = Sys.Date()
+    dif = time_length(today - bday, unit = unit)
+    return(dif)
+}
+age_calc("1982-05-10", unit = "hour")
+```
+
+
+As the last step, show this function to your students and ask them to gues what the ouput will look like without running the function in R. 
+
+```{r}
+age_calc <- function(bday, unit = "day"){
+    warning("Please enter the date as 'yyyy-mm-dd'")
+    bday = ymd(bday)
+    today = Sys.Date()
+    dif = round(time_length(today - bday, unit = unit), 1)
+    print(paste("You are ", dif, " ", unit, "s ", "old", sep=""))
+}
+age_calc("1982-05-10", unit = "year")
+```
+
+
