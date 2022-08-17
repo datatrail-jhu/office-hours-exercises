@@ -21,23 +21,18 @@ Let's fix some things in this dataset before we save it to RDS.
 
 ### Column renaming 
 
-Let's change column names to be in a more standard format using `dplyr::rename()`. Instead of having the column names like `Sepal.Length`, change them to be like this: `sepal_length`. Where you've replace the `.` with an underscore `_` and turn capitalized letters into all lower. 
+Let's change column names to be in a more standard format using `dplyr::rename`. Instead of having the column names like `Sepal.Length`, change them to be like this: `sepal_length`. Where you've replace the `.` with an underscore `_` and turn capitalized letters into all lower. 
 
 Save this new version of the dataset as `iris_cleaned`. 
 
 ```{r}
-iris_cleaned <- iris %>% 
-  dplyr::rename(sepal_length = Sepal.Length, 
-                sepal_width = Sepal.Width,
-                petal_length = Petal.Length,
-                petal_width = Petal.Width, 
-                species = Species)
+iris_cleaned <- 
 ```
 
 Use the `saveRDS()` function to save `iris_cleaned` object to a file called "iris_cleaned.rds" that is located in the `data` folder.
 
 ```{r}
-saveRDS(iris_cleaned, file = file.path("data", "iris_cleaned.rds"))
+
 ```
 
 ## Read in an RDS file
@@ -45,14 +40,13 @@ saveRDS(iris_cleaned, file = file.path("data", "iris_cleaned.rds"))
 Now that you have an RDS file, let's see what it looks like when you read the "data/iris_cleaned.rds" file in using the `readRDS()` function. Assign this re-read object the name `iris_cleaned_reread`.
 
 ```{r}
-iris_cleaned_reread <- readRDS(file.path("data", "iris_cleaned.rds"))
+iris_cleaned_reread <- 
 ```
-
 
 Use the function `all.equal()` to see if `iris_cleaned_reread` (the read in version) and `iris_cleaned` (the original version) are indeed the same. 
 
 ```{r}
-all.equal(iris_cleaned, iris_cleaned_reread)
+
 ```
 
 If you got a `TRUE` that means that they are identical R objects. 
@@ -105,21 +99,17 @@ Use the readr::read_csv() function to read in the `championsdata.csv` and the `r
 Save these in your R environment as `champs` and `runners` respectively. 
 
 ```{r}
-library("readr")
+
 ```
 
 ```{r}
-champs <- read_csv(file.path("data", "championsdata.csv"))
-runners <- read_csv(file.path("data", "runnerupsdata.csv"))
+
 ```
 
 Take a look through these two datasets and see what columns and information is included. Use the `colnames()` function to print out what column names are in each. 
 
 ```{r}
-colnames(champs)
-```
-```{r}
-colnames(runners)
+
 ```
 
 There's a lot of acronyms that aren't clear what they mean. 
@@ -131,10 +121,7 @@ Go to https://www.kaggle.com/daverosenman/nba-finals-team-stats for more informa
 How many distinct teams are there? Used the `distinct()` and `select()` functions on the `champs` data frame and the `Team` variable to find out. 
 
 ```{r}
-## check the names, see any issue
-champs %>% 
-    dplyr::select(Team) %>%
-    dplyr::distinct()
+
 ```
 
 Notice anything strange about the distinct teams listed above? 
@@ -148,20 +135,13 @@ Write code to replace all instances of `Warriorrs` with the correctly spelled `W
 Remember whatever strategy you use, once you have one figured out you'll need to make sure that the edited version of the `Team` column is re-saved back to the `champs` data frame over the old version of the `Team` column. 
 
 ```{r}
-champs <- champs %>% 
-  dplyr::mutate(Team = dplyr::case_when(
-    Team == "Warriorrs" ~ "Warriors", 
-    Team == "'Heat'" ~ "Heat", 
-    TRUE ~ Team
-))
+
 ```
 
 Does the `runners` data have this same problem? If so, use the code you figured out above to also fix this dataset. If not, then carry on your merry way. 
 
 ```{r}
-runners %>% 
-    dplyr::select(Team) %>%
-    dplyr::distinct()
+
 ```
 
 ### Fixing data types
@@ -171,38 +151,22 @@ Take a look at the columns `Win`, `Home`, and `Team` in the `champs` data frame.
 Find out what kind of data type each of these columns are using `str()` function. 
 
 ```{r}
-str(champs$Win)
-# The Win column is meant to be a TRUE/FALSE 
-# but currently is read in as a numeric variable
+
 ```
 
 ```{r}
-str(champs$Home)
-# The Home column has the same problem
+
 ```
 
 
 ```{r}
-str(champs$Team)
-# The Team column has repeated values but is read in as character instead of a factor. 
-# We should switch this to a Factor. 
+
 ```
-
-
 
 Turn `Win` and `Home` into logical variables and, turn the `Team` column into a factor for both the `champs` and `runners` data frames. 
 
 ```{r}
-# Turn Win and Home into logical variables and Team into a factor
-champs <- champs %>%
-    dplyr::mutate(Win = as.logical(Win), 
-                  Home = as.logical(Home), 
-                  Team = as.factor(Team))
 
-runners <- runners %>%
-    dplyr::mutate(Win = as.logical(Win), 
-                  Home = as.logical(Home), 
-                  Team = as.factor(Team))
 ```
 
 ### Summarize the data
@@ -210,29 +174,19 @@ runners <- runners %>%
 Using the `dplyr::group_by()`, `dplyr::summarize()`, and `mean()` functions, find out the average total points (PTS) per game for a winning team by year. 
 
 ```{r}
-points_by_year <- champs %>% 
-  dplyr::group_by(Year, Team) %>% 
-  dplyr::summarize(avg_points = mean(PTS))
+
 ```
 
 Make a plot with `plot()` to see the average points over the years. Have there been higher total scores or any particular trends? 
 
 ```{r}
-plot(points_by_year$Year, points_by_year$avg_points, 
-     ylab = "average points", 
-     xlab = "year")
+
 ```
 
 Find out this same question but for the runners up. 
 
 ```{r}
-points_by_year_runners <- runners %>% 
-  dplyr::group_by(Year, Team) %>% 
-  dplyr::summarize(avg_points = mean(PTS))
 
-plot(points_by_year_runners$Year, points_by_year_runners$avg_points, 
-     ylab = "average points", 
-     xlab = "year")
 ```
 
 ### Session Info 

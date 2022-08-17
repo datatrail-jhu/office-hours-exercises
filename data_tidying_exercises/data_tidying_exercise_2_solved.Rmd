@@ -6,7 +6,7 @@ date: "2022-08-17"
 
 ### Binding data frames
 
-It probably makes sense to combine the `champs` and `runners` datasets together into one dataframe since they have the same columns and similar information. 
+It probably makes sense to combine the `champs` and `runners` data sets together into one dataframe since they have the same columns and similar information. 
 
 It is in general better when we bind two datasets to have an indicator variable that shows from which dataset each row comes from. This can be done using the `.id` argument in the `bind_rows()` function. Note that by saying `"Champion" = champs` and `"Runner" = runners` we are making the identifier equal to `Champion` for the *champs* dataframe and equal to `Runner` for the *runners* dataframe. 
 
