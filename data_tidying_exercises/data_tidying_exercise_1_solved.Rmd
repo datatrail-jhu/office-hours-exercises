@@ -36,6 +36,13 @@ iris_cleaned <- iris %>%
 
 Use the `saveRDS()` function to save `iris_cleaned` object to a file called "iris_cleaned.rds" that is located in the `data` folder.
 
+We can create this data folder by running this command: 
+
+```{r}
+# Use this command to make a new folder
+dir.create("data", showWarnings = FALSE)
+```
+
 ```{r}
 saveRDS(iris_cleaned, file = file.path("data", "iris_cleaned.rds"))
 ```
@@ -74,14 +81,7 @@ Click the Download button in the upper right corner.
 In order to download data on Kaggle, you'll need to create a Kaggle account.
 You can do so by linking your Google account. 
 
-Unzip these data after you've downloaded them to your chromebook. 
-
-### Make a data folder 
-
-```{r}
-# Use this command to make a new folder
-dir.create("data", showWarnings = FALSE)
-```
+Unzip these data after you've downloaded them to your chromebook. You can do this in your chromebook by right clicking on the `archive.zip` and choosing `Extract All`. 
 
 Use the Upload button in RStudio in the bottom right panel to upload these data RStudio cloud and specifically to your `data` folder.
 
@@ -101,7 +101,7 @@ file.exists(file.path("data", "runnerupsdata.csv"))
 
 ### Read in the data 
 
-Use the readr::read_csv() function to read in the `championsdata.csv` and the `runnersupdata.csv` files. 
+Use the `readr::read_csv()` function to read in the `championsdata.csv` and the `runnerupsdata.csv` files. 
 Save these in your R environment as `champs` and `runners` respectively. 
 
 ```{r}
