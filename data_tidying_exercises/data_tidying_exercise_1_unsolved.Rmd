@@ -122,7 +122,11 @@ Go to https://www.kaggle.com/daverosenman/nba-finals-team-stats for more informa
 How many distinct teams are there? Used the `distinct()` and `select()` functions on the `champs` data frame and the `Team` variable to find out. 
 
 ```{r}
+distinct_teams <- champs %>% 
+  dplyr::select(Team) %>% 
+  dplyr::distinct()
 
+distinct_teams
 ```
 
 Notice anything strange about the distinct teams listed above? 

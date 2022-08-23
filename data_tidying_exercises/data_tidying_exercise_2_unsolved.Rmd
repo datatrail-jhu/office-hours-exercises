@@ -1,0 +1,216 @@
+---
+title: "Data Tidying Exercise 2"
+output: html_document
+date: "2022-08-22"
+---
+
+```{r}
+library(magrittr)
+```
+
+## Data tidying Exercise 2
+
+For this exercise we are going to work with a different dataset from Kaggle. 
+
+Go to this URL and download this dataset about fast food restaurants. 
+
+https://www.kaggle.com/datasets/datafiniti/fast-food-restaurants
+
+Click the Download button in the upper right corner. 
+
+In order to download data on Kaggle, you'll need to create a Kaggle account.
+You can do so by linking your Google account. 
+
+Unzip these data after you've downloaded them to your chromebook. You can do this in your chromebook by right clicking on the `archive.zip` and choosing `Extract All`. 
+
+Use the Upload button in RStudio in the bottom right panel to upload these data RStudio cloud and specifically to your `data` folder.
+
+To check if you've successfully uploaded these data in the right place, you can run this command. It will tell you `TRUE` if the respective file is in the right place. 
+
+```{r}
+# Check for "FastFoodRestaurants.csv" in the data folder
+file.exists(file.path("data", "FastFoodRestaurants.csv"))
+```
+
+```{r}
+# Check for "FastFoodRestaurants.csv" in the data folder
+file.exists(file.path("data", "Datafiniti_Fast_Food_Restaurants_May19.csv"))
+```
+
+```{r}
+# Check for "FastFoodRestaurants.csv" in the data folder
+file.exists(file.path("data", "Datafiniti_Fast_Food_Restaurants.csv"))
+```
+
+### Read in the data 
+
+Use the `readr::read_csv()` function to read in the `Datafiniti_Fast_Food_Restaurants.csv` and the `Datafiniti_Fast_Food_Restaurants_May19.csv` files. 
+
+Save these in your R environment as `ffood` and `ffood_may` respectively. 
+
+```{r}
+
+
+```
+
+See if these data frames, `ffood` and `ffood_may`, are the same by using `all.equal()` function. 
+
+```{r}
+
+```
+
+They are not the same! How do we figure out what to do with these? 
+
+Let's take a look at the id column of each and see if they have some of the same entries for some of the same restaurants. 
+
+To start, let's try using `intersect()` to obtain the ids themselves that are in both datasets.
+
+```{r}
+
+```
+
+There appears to be 379 restaurants that are in both lists. But the IDs of these restaurants aren't terrible informative for us. 
+
+Let's use some fancy tricks for combining data frames so we can explore these datasets. 
+
+
+### Joining 
+
+The `dplyr` package has a family of functions called `join` that all serve to combine two datasets together. Use the `?dplyr::join` to bring up the help page for these functions. 
+
+There are different kinds of joins listed here - and we'll play with them all! 
+
+`inner_join()`: includes all rows in x and y.
+`left_join()`: includes all rows in x.
+`right_join()`: includes all rows in y.
+`full_join()`: includes all rows in x or y.
+
+
+These join functions all have a `by` argument that you can specify what column to use as a key to match the two datasets by. In this instance, we'll want to use the columns `id` to match the datasets rows. 
+
+First, let's try an `inner_join()`. This will **only** keep the `id`s common to both datasets.
+
+```{r}
+
+```
+
+Note that all the columns end in an `x` or a `y`. This is because these datasets have columns with the same name. We can use an argument, `suffix` to specify what we'd like these to be called. Let's re-run `inner_join` but this time specify that we want `suffix = c("", "_may")`. This will make it so that the `May19` dataset's columns end in `_may` after we join, but the other dataset' will have no suffix. 
+
+
+```{r}
+
+```
+
+We can also try a different kind of join. Let's say we mainly care about the `ffood`'s data and don't care so much about the `ffood_may` data. In this case we could do a left join so that we keep *everything* in the one dataset but only things that have a match in the other. Let's try it out. 
+
+```{r}
+
+```
+
+Note that if we don't switch the order of `ffood` and `ffood_may` in our code, we could use a `right_join()` which would keep everything in `ffood_may` but only keep data in `ffood` that has a match. 
+Alternatively, we could just switch the order of the datasets we are providing. 
+
+Lastly, let's try a `full_join`. This will keep all data from both sets, but match those together that are in both. This is the biggest resulting dataset we would have. 
+
+```{r}
+
+```
+
+### Row binding
+
+Notice that our datasets only have a relatively small amount of data in common (379 out of 10,000 rows). In this case, it may be more appropriate to put our datasets together by stacking the rows rather than putting together the columns. 
+
+To do this, we could use a row bind. Look up `?dplyr::bind_rows` to see this function's help page. Let's use this function. 
+
+If we want to keep track of which row of data came from where, we should use the `.id` argument to specify a column name where this info will be kepy. 
+
+```{r}
+
+```
+
+Note that the `id` column is not super easy to understand in that it has `"1"` and `"2"` when it really means `ffood` and `ffood_may`. So to fix this, we can specify these names of these dataframes. Look at the examples in the documentation and try to do this so that the `id` column says `ffood` and `ffood_may` instead of `"1"` and `"2"`. 
+
+```{r}
+
+```
+
+The only problem with this dataset is we likely have duplicate data! But there's another function we can use to address this. Use  the `distinct()` function and specify the `id` column to get rid of the duplicate columns in this data frame. 
+
+You will need to use the `.keep_all = TRUE` argument so that all columns are kept!
+
+````{r}
+
+```
+
+
+If you've done these steps as expected, you should be left with a data frame of 18,964 rows. You can check this in the Environment panel or use the `nrow()` function. 
+
+````{r}
+
+```
+
+Lastly, save this data frame to a CSV file so we can return to it in a future exercise. 
+
+```{r}
+
+```
+
+## Exercise 2: Calculating Age Based on Birthdate {-}
+
+In this exercise, we will learn how to work with data objects. We will work with the package **lubridate**. Install and load the package **lubridate**.
+
+```{r}
+
+```
+
+Create an object called `mybday` that stores your birthday. Use the `ymd()` function to do this. 
+
+```{r}
+
+```
+
+Do this same thing, but this time use the `dmy()` function. 
+
+```{r}
+
+```
+
+Find a function in R that returns today's date and use it to save today's date to an object called `today`. You can use Google or the Help pane, or whatever you prefer. 
+
+```{r}
+
+```
+
+How would you calculate your age from these two objects? Go ahead and see if doing some math with `today` and `mybday` works. 
+
+```{r}
+
+```
+
+A number of days is not super easy to report as an age. 
+
+Use the function `time_length()` from the **lubridate** package to convert this to years. 
+
+```{r}
+
+```
+
+## Bonus Exercise
+
+Using what we've covered so far, write a function that will take a birthday and return in years, someone's age. 
+
+```{r}
+
+```
+
+Now add a warning message to this function that will warn a user to input their birthday as "yyyy-md-dd". 
+
+```{r}
+
+```
+
+### Session Info
+
+```{r}
+sessionInfo()
+```

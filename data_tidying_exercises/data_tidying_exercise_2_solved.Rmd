@@ -1,124 +1,236 @@
 ---
-title: "Data Tidying Exercise"
+title: "Data Tidying Exercise 2"
 output: html_document
-date: "2022-08-17"
+date: "2022-08-22"
 ---
 
-### Binding data frames
+```{r}
+library(magrittr)
+```
 
-It probably makes sense to combine the `champs` and `runners` data sets together into one dataframe since they have the same columns and similar information. 
+## Data tidying Exercise 2
 
-It is in general better when we bind two datasets to have an indicator variable that shows from which dataset each row comes from. This can be done using the `.id` argument in the `bind_rows()` function. Note that by saying `"Champion" = champs` and `"Runner" = runners` we are making the identifier equal to `Champion` for the *champs* dataframe and equal to `Runner` for the *runners* dataframe. 
+For this exercise we are going to work with a different dataset from Kaggle. 
+
+Go to this URL and download this dataset about fast food restaurants. 
+
+https://www.kaggle.com/datasets/datafiniti/fast-food-restaurants
+
+Click the Download button in the upper right corner. 
+
+In order to download data on Kaggle, you'll need to create a Kaggle account.
+You can do so by linking your Google account. 
+
+Unzip these data after you've downloaded them to your chromebook. You can do this in your chromebook by right clicking on the `archive.zip` and choosing `Extract All`. 
+
+Use the Upload button in RStudio in the bottom right panel to upload these data RStudio cloud and specifically to your `data` folder.
+
+To check if you've successfully uploaded these data in the right place, you can run this command. It will tell you `TRUE` if the respective file is in the right place. 
 
 ```{r}
-## add a column that shows champions vs. runnerups call it rank
-all_teams <- dplyr::bind_rows("Champion" = champs, "Runner" = runners, .id = "rank")
+# Check for "FastFoodRestaurants.csv" in the data folder
+file.exists(file.path("data", "FastFoodRestaurants.csv"))
+```
+
+```{r}
+# Check for "FastFoodRestaurants.csv" in the data folder
+file.exists(file.path("data", "Datafiniti_Fast_Food_Restaurants_May19.csv"))
+```
+
+```{r}
+# Check for "FastFoodRestaurants.csv" in the data folder
+file.exists(file.path("data", "Datafiniti_Fast_Food_Restaurants.csv"))
+```
+
+### Read in the data 
+
+Use the `readr::read_csv()` function to read in the `Datafiniti_Fast_Food_Restaurants.csv` and the `Datafiniti_Fast_Food_Restaurants_May19.csv` files. 
+
+Save these in your R environment as `ffood` and `ffood_may` respectively. 
+
+```{r}
+ffood <- readr::read_csv(file.path("data", "Datafiniti_Fast_Food_Restaurants.csv"))
+
+ffood_may <- readr::read_csv(file.path("data", "Datafiniti_Fast_Food_Restaurants_May19.csv"))
+```
+See if these data frames, `ffood` and `ffood_may`, are the same by using `all.equal()` function. 
+
+```{r}
+all.equal(ffood, ffood_may)
+```
+
+They are not the same! How do we figure out what to do with these? 
+
+Let's take a look at the id column of each and see if they have some of the same entries for some of the same restaurants. 
+
+To start, let's try using `intersect()` to obtain the ids themselves that are in both datasets.
+
+```{r}
+length(intersect(ffood$id, ffood_may$id))
+```
+
+There appears to be 379 restaurants that are in both lists. But the IDs of these restaurants aren't terrible informative for us. 
+
+Let's use some fancy tricks for combining data frames so we can explore these datasets. 
+
+
+### Joining 
+
+The `dplyr` package has a family of functions called `join` that all serve to combine two datasets together. Use the `?dplyr::join` to bring up the help page for these functions. 
+
+There are different kinds of joins listed here - and we'll play with them all! 
+
+`inner_join()`: includes all rows in x and y.
+`left_join()`: includes all rows in x.
+`right_join()`: includes all rows in y.
+`full_join()`: includes all rows in x or y.
+
+
+These join functions all have a `by` argument that you can specify what column to use as a key to match the two datasets by. In this instance, we'll want to use the columns `id` to match the datasets rows. 
+
+First, let's try an `inner_join()`. This will **only** keep the `id`s common to both datasets.
+
+```{r}
+intersect_df <- dplyr::inner_join(ffood, ffood_may, by = "id") 
+```
+
+Note that all the columns end in an `x` or a `y`. This is because these datasets have columns with the same name. We can use an argument, `suffix` to specify what we'd like these to be called. Let's re-run `inner_join` but this time specify that we want `suffix = c("", "_may")`. This will make it so that the `May19` dataset's columns end in `_may` after we join, but the other dataset' will have no suffix. 
+
+
+```{r}
+intersect_df <- dplyr::inner_join(ffood, ffood_may, by = "id", 
+                                  suffix = c("", "_may")) 
+```
+
+We can also try a different kind of join. Let's say we mainly care about the `ffood`'s data and don't care so much about the `ffood_may` data. In this case we could do a left join so that we keep *everything* in the one dataset but only things that have a match in the other. Let's try it out. 
+
+```{r}
+left_df <- dplyr::left_join(ffood, ffood_may, by = "id",
+                            suffix = c("", "_may")) 
+```
+
+Note that if we don't switch the order of `ffood` and `ffood_may` in our code, we could use a `right_join()` which would keep everything in `ffood_may` but only keep data in `ffood` that has a match. 
+Alternatively, we could just switch the order of the datasets we are providing. 
+
+Lastly, let's try a `full_join`. This will keep all data from both sets, but match those together that are in both. This is the biggest resulting dataset we would have. 
+
+```{r}
+full_df <- dplyr::full_join(ffood, ffood_may, by = "id",
+                            suffix = c("", "_may")) 
+```
+
+### Row binding
+
+Notice that our datasets only have a relatively small amount of data in common (379 out of 10,000 rows). In this case, it may be more appropriate to put our datasets together by stacking the rows rather than putting together the columns. 
+
+To do this, we could use a row bind. Look up `?dplyr::bind_rows` to see this function's help page. Let's use this function. 
+
+If we want to keep track of which row of data came from where, we should use the `.id` argument to specify a column name where this info will be kepy. 
+
+```{r}
+bind_rows_df <- dplyr::bind_rows(ffood, ffood_may, .id = "dataset")
+```
+
+Note that the `id` column is not super easy to understand in that it has `"1"` and `"2"` when it really means `ffood` and `ffood_may`. So to fix this, we can specify these names of these dataframes. Look at the examples in the documentation and try to do this so that the `id` column says `ffood` and `ffood_may` instead of `"1"` and `"2"`. 
+
+```{r}
+bind_rows_df <- dplyr::bind_rows("ffood" = ffood,
+                                 "ffood_may" = ffood_may,
+                                 .id = "dataset")
+```
+
+The only problem with this dataset is we likely have duplicate data! But there's another function we can use to address this. Use  the `distinct()` function and specify the `id` column to get rid of the duplicate columns in this data frame. 
+
+You will need to use the `.keep_all = TRUE` argument so that all columns are kept!
+
+````{r}
+bind_rows_df <- bind_rows_df %>% 
+  dplyr::distinct(id, .keep_all = TRUE)
 ```
 
 
-### Joining data frames
+If you've done these steps as expected, you should be left with a data frame of 18,964 rows. You can check this in the Environment panel or use the `nrow()` function. 
 
-Note that there's no reason we couldn't put the information in `champs` and `runners` together into one, more easily readable data frame. 
+````{r}
+nrow(bind_rows_df)
+```
 
-The `join` functions are exactly what we can use to do that. 
-
-Use the `dplyr::full_join` function to join `champs` and `runners` together in a way that puts rows together by their `Team`. 
+Lastly, save this data frame to a CSV file so we can return to it in a future exercise. 
 
 ```{r}
-## bind the two data sets together using inner_join
-all_teams <- dplyr::full_join(champs, runners, by = "Team", suffix = c("_win", "_runner"))
+readr::write_csv(bind_rows_df, file.path("data", "fast_food_combined.csv"))
 ```
 
 ## Exercise 2: Calculating Age Based on Birthdate {-}
 
-In this exercise, your students will learn how to work with data objects. They have to combine their skills in writing functions and working with the package **lubridate**. Ask them to install and load the package **lubridate**.
+In this exercise, we will learn how to work with data objects. We will work with the package **lubridate**. Install and load the package **lubridate**.
 
-```{r, eval = FALSE}
+```{r}
 install.packages("lubridate")
 library("lubridate")
 ```
 
-First, ask them to create an object called and call it `mybday` that stores their birthday.
+Create an object called `mybday` that stores your birthday. Use the `ymd()` function to do this. 
 
 ```{r}
-library(lubridate)
-mybday <- ymd("1998-09-20")
+mybday <- ymd("1991-09-25")
 ```
 
-Note that they can also save their birthday like:
+Do this same thing, but this time use the `dmy()` function. 
 
 ```{r}
-mybday <- dmy("20-Sep-1998")
+mybday <- dmy("25-Sep-1991")
 ```
 
-Now ask your students to find the function in R that returns today's date. You can ask them to google this as it's likely that the first link has the answer to their question. The function they need to use is `Sys.Date()`. Ask them to save today's date to an object called `today`.
+Find a function in R that returns today's date and use it to save today's date to an object called `today`.
 
 ```{r}
 today <- Sys.Date()
 ```
 
-The interesting thing about date objects is that we can do algebraic operations on them just like we do to numeric objects. We can add them or subtract one from another. Now, ask your studnets how they would calculate their age based on the two objects. They probably say they'd subtract `mybdat` from `today` and that's true. When they do so, they will realize the answer is in days and not in years. 
+How would you calculate your age from these two objects? Go ahead and see if doing some math with `today` and `mybday` works. 
 
 ```{r}
 today - mybday
 ```
 
-Well, then can then easily convert the answer to years by dividing the number by 365 or they can use the function `time_length()` again from the **lubridate** package.
+A number of days is not super easy to report as an age. 
+
+Use the function `time_length()` from the **lubridate** package to convert this to years. 
 
 ```{r}
 time_length(today - mybday, unit = "year")
 ```
 
-Now that your studetns are comfortable calculating age based on a birthdate and current date, ask them to write a function that will take a person's birthdate and will return the age in years. This should be easy given the solution above.
+## Bonus Exercise
+
+Using what we've covered so far, write a function that will take a birthday and return in years, someone's age. 
 
 ```{r}
 age_calc <- function(bday){
-    bday = ymd(bday)
-    today = Sys.Date()
-    dif = time_length(today - bday, unit = "year")
+    bday <- ymd(bday)
+    today <- Sys.Date()
+    dif <- time_length(today - bday, unit = "year")
     return(dif)
 }
 age_calc("1982-05-10")
 ```
 
-Tell your students to add a warning message that is shown to user warning them to enter date as "yyyy-md-dd". So the function should show a warning message after the calculation is done.
+Now add a warning message to this function that will warn a user to input their birthday as "yyyy-md-dd". 
 
 ```{r}
 age_calc <- function(bday){
     warning("Please enter the date as 'yyyy-mm-dd'")
-    bday = ymd(bday)
-    today = Sys.Date()
-    dif = time_length(today - bday, unit = "year")
+    bday <- ymd(bday)
+    today <- Sys.Date()
+    dif <- time_length(today - bday, unit = "year")
     return(dif)
 }
 age_calc("1982-05-10")
 ```
 
-Next, you can tell your students to modify the function so that the user determines whether age should be reported in years, months, days, hours, etc. In other words, the `unit` argumenst should be entered by user but its default value is in days.
+### Session Info
 
 ```{r}
-age_calc <- function(bday, unit = "day"){
-    warning("Please enter the date as 'yyyy-mm-dd'")
-    bday = ymd(bday)
-    today = Sys.Date()
-    dif = time_length(today - bday, unit = unit)
-    return(dif)
-}
-age_calc("1982-05-10", unit = "hour")
+sessionInfo()
 ```
-
-
-As the last step, show this function to your students and ask them to gues what the ouput will look like without running the function in R. 
-
-```{r}
-age_calc <- function(bday, unit = "day"){
-    warning("Please enter the date as 'yyyy-mm-dd'")
-    bday = ymd(bday)
-    today = Sys.Date()
-    dif = round(time_length(today - bday, unit = unit), 1)
-    print(paste("You are ", dif, " ", unit, "s ", "old", sep=""))
-}
-age_calc("1982-05-10", unit = "year")
-```
-
-
