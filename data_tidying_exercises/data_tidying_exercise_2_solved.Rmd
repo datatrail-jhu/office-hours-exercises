@@ -229,6 +229,27 @@ age_calc <- function(bday){
 age_calc("1982-05-10")
 ```
 
+
+### Bonus bonus: Make a cooler function 
+
+Let's make a function that fails if we give it the wrong kind of date input. 
+
+```{r}
+calc_age <- function(birthday) {
+  # This function takes a birthday as input and returns an age in years. 
+  mybday <- tryCatch(ymd(birthday),
+  error = function(e) {
+      #what should be done in case of exeption?
+      stop("Birthdays must be entered in yyyy-md-dd format")
+    })
+  today <- Sys.Date()
+  age <- time_length(today - mybday, unit = "year")
+  return(age)
+}
+
+calc_age("1995-April-25")
+```
+
 ### Session Info
 
 ```{r}

@@ -50,7 +50,6 @@ Save these in your R environment as `ffood` and `ffood_may` respectively.
 
 ```{r}
 
-
 ```
 
 See if these data frames, `ffood` and `ffood_may`, are the same by using `all.equal()` function. 
@@ -84,7 +83,6 @@ There are different kinds of joins listed here - and we'll play with them all!
 `left_join()`: includes all rows in x.
 `right_join()`: includes all rows in y.
 `full_join()`: includes all rows in x or y.
-
 
 These join functions all have a `by` argument that you can specify what column to use as a key to match the two datasets by. In this instance, we'll want to use the columns `id` to match the datasets rows. 
 
@@ -122,7 +120,7 @@ Notice that our datasets only have a relatively small amount of data in common (
 
 To do this, we could use a row bind. Look up `?dplyr::bind_rows` to see this function's help page. Let's use this function. 
 
-If we want to keep track of which row of data came from where, we should use the `.id` argument to specify a column name where this info will be kepy. 
+If we want to keep track of which row of data came from where, we should use the `.id` argument to specify a column name where this info will be kept. 
 
 ```{r}
 
@@ -141,7 +139,6 @@ You will need to use the `.keep_all = TRUE` argument so that all columns are kep
 ````{r}
 
 ```
-
 
 If you've done these steps as expected, you should be left with a data frame of 18,964 rows. You can check this in the Environment panel or use the `nrow()` function. 
 
