@@ -1,210 +1,131 @@
 ---
-title: "Data Tidying Exercise 2"
+title: "Data Visuals Exercise 1"
 output: html_document
 date: "2022-08-22"
 ---
 
 ```{r}
 library(magrittr)
+library(ggplot2)
 ```
 
-## Data tidying Exercise 2
+## Data Visuals Exercise 1
 
-For this exercise we are going to work with a different dataset from Kaggle. 
-
-Go to this URL and download this dataset about fast food restaurants. 
-
-https://www.kaggle.com/datasets/datafiniti/fast-food-restaurants
-
-Click the Download button in the upper right corner. 
-
-In order to download data on Kaggle, you'll need to create a Kaggle account.
-You can do so by linking your Google account. 
-
-Unzip these data after you've downloaded them to your chromebook. You can do this in your chromebook by right clicking on the `archive.zip` and choosing `Extract All`. 
-
-Use the Upload button in RStudio in the bottom right panel to upload these data RStudio cloud and specifically to your `data` folder.
-
-To check if you've successfully uploaded these data in the right place, you can run this command. It will tell you `TRUE` if the respective file is in the right place. 
+We will also want the original `FastFoodRestaurants.csv` file from this dataset. 
 
 ```{r}
 # Check for "FastFoodRestaurants.csv" in the data folder
 file.exists(file.path("data", "FastFoodRestaurants.csv"))
 ```
 
-```{r}
-# Check for "FastFoodRestaurants.csv" in the data folder
-file.exists(file.path("data", "Datafiniti_Fast_Food_Restaurants_May19.csv"))
-```
-
-```{r}
-# Check for "FastFoodRestaurants.csv" in the data folder
-file.exists(file.path("data", "Datafiniti_Fast_Food_Restaurants.csv"))
-```
-
 ### Read in the data 
 
-Use the `readr::read_csv()` function to read in the `Datafiniti_Fast_Food_Restaurants.csv` and the `Datafiniti_Fast_Food_Restaurants_May19.csv` files. 
+Use the `readr::read_csv()` function to read in the `FastFoodRestaurants.csv` file
 
-Save these in your R environment as `ffood` and `ffood_may` respectively. 
-
-```{r}
-
-```
-
-See if these data frames, `ffood` and `ffood_may`, are the same by using `all.equal()` function. 
+Call it `ffood`.
 
 ```{r}
-
+ffood <- readr::read_csv(file.path("data", "FastFoodRestaurants.csv"))
 ```
 
-They are not the same! How do we figure out what to do with these? 
+## How many restaurants of each name are there? 
 
-Let's take a look at the id column of each and see if they have some of the same entries for some of the same restaurants. 
+We're going to work on building a barplot with the information in `num_restaurant` but we'll have to do some cleaning first.
 
-To start, let's try using `intersect()` to obtain the ids themselves that are in both datasets.
+Use the `dplyr::count()` function to find out how many restaurants of each `name` exist in the `ffood` data frame. 
 
 ```{r}
-
+ffood %>% dplyr::count(name)
 ```
 
-There appears to be 379 restaurants that are in both lists. But the IDs of these restaurants aren't terrible informative for us. 
+Look at how many entries there are for A&W! There's some categories in here that should probably be combined. So we should probably do some data cleaning to make these be the same. 
 
-Let's use some fancy tricks for combining data frames so we can explore these datasets. 
+Let's rename restaurants so that they are clumped together based on what they actually are. 
 
+If we notice there's a lot of typos having to do with apostrophes and capitalization. An easy way to get around this is to get rid of apostrophes and capitalization completely and then recode later. 
 
-### Joining 
+The edits we make to `ffood` we will assign to a new name called `ffood_cleaned`. 
 
-The `dplyr` package has a family of functions called `join` that all serve to combine two datasets together. Use the `?dplyr::join` to bring up the help page for these functions. 
-
-There are different kinds of joins listed here - and we'll play with them all! 
-
-`inner_join()`: includes all rows in x and y.
-`left_join()`: includes all rows in x.
-`right_join()`: includes all rows in y.
-`full_join()`: includes all rows in x or y.
-
-These join functions all have a `by` argument that you can specify what column to use as a key to match the two datasets by. In this instance, we'll want to use the columns `id` to match the datasets rows. 
-
-First, let's try an `inner_join()`. This will **only** keep the `id`s common to both datasets.
+Let's do two edits with a `dplyr::mutate()`
+1. First, make all the names in `name` variable go to lower case by using the `tolower()` function. 
+2. Next, let's delete all apostrophes. An easy way to do this is to use the `gsub()` function and replace ` 
 
 ```{r}
-
+ffood_cleaned <- ffood %>% 
+  dplyr::mutate(name = tolower(name), 
+                name = gsub("'", "", name))
 ```
 
-Note that all the columns end in an `x` or a `y`. This is because these datasets have columns with the same name. We can use an argument, `suffix` to specify what we'd like these to be called. Let's re-run `inner_join` but this time specify that we want `suffix = c("", "_may")`. This will make it so that the `May19` dataset's columns end in `_may` after we join, but the other dataset' will have no suffix. 
-
+Let's rerun ` dplyr::count(name)` to see where this leaves us. 
 
 ```{r}
-
+ffood_cleaned %>% dplyr::count(name)
 ```
 
-We can also try a different kind of join. Let's say we mainly care about the `ffood`'s data and don't care so much about the `ffood_may` data. In this case we could do a left join so that we keep *everything* in the one dataset but only things that have a match in the other. Let's try it out. 
+This helped get some categories sorted, but there's still a lot more with problems. Some of these problems are a great instance to use `dplyr::mutate` with `dplyr::case_when()` to recode variables in `ffood_cleaned`. 
 
 ```{r}
-
+ffood_cleaned <- ffood_cleaned %>% 
+  dplyr::mutate(name = dplyr::case_when(
+    grepl("A&W", name, ignore.case = TRUE) ~ "A&W All American Food", 
+    grepl("Chick-", name) ~ "Chick-fil-A",
+    grepl("Captain D's", name) ~ "Captain D's Seafood",
+    grepl("Kfc", name, ignore.case = TRUE) ~ "Kentucky Fried Chicken", 
+    TRUE ~ name
+    ))
 ```
 
-Note that if we don't switch the order of `ffood` and `ffood_may` in our code, we could use a `right_join()` which would keep everything in `ffood_may` but only keep data in `ffood` that has a match. 
-Alternatively, we could just switch the order of the datasets we are providing. 
-
-Lastly, let's try a `full_join`. This will keep all data from both sets, but match those together that are in both. This is the biggest resulting dataset we would have. 
+Now we can recount restaurants per `name` with `dplyr::count()` but this time from `ffood_cleaned`.  
 
 ```{r}
-
+ffood_cleaned %>% dplyr::count(name)
 ```
 
-### Row binding
 
-Notice that our datasets only have a relatively small amount of data in common (379 out of 10,000 rows). In this case, it may be more appropriate to put our datasets together by stacking the rows rather than putting together the columns. 
+## Start plotting!
 
-To do this, we could use a row bind. Look up `?dplyr::bind_rows` to see this function's help page. Let's use this function. 
+All ggplots start off with this same function `ggplot()` with the `aes()` function within it. 
 
-If we want to keep track of which row of data came from where, we should use the `.id` argument to specify a column name where this info will be kept. 
+Let's start by making our basic ggplot object. Fill in the template object below by replacing `DATA_FRAME`, `X_VARIABLE`, and `Y_VARIABLE` with the appropriate objects. 
 
 ```{r}
+# ggplot(DATA_FRAME, aes(X_VARIABLE, Y_VARIABLE))
 
+ggplot(num_restaurant, aes(name, restaurant_n))
 ```
 
-Note that the `id` column is not super easy to understand in that it has `"1"` and `"2"` when it really means `ffood` and `ffood_may`. So to fix this, we can specify these names of these dataframes. Look at the examples in the documentation and try to do this so that the `id` column says `ffood` and `ffood_may` instead of `"1"` and `"2"`. 
+As you can see, the basic ggplot object isn't really anything and can't really be read. 
+
+To start to make this more readable, we first have to add a first layer by adding a specification of what kind of plot we'd like. In this instance we want a barplot, so we will use a `+` and add on the `geom_bar()` function. 
+
+
+Copy and paste the ggplot you started in the previous chunk but now add on a `+ geom_bar(stat = "identity")`. 
 
 ```{r}
-
+ggplot(num_restaurant, aes(name, restaurant_n)) + 
+  geom_bar(stat = "identity")
 ```
+Now we have data plotted but its still pretty unintelligible. The labels are too small and there's too many data points to make sense of this. 
 
-The only problem with this dataset is we likely have duplicate data! But there's another function we can use to address this. Use  the `distinct()` function and specify the `id` column to get rid of the duplicate columns in this data frame. 
+One way to make this more legible is to narrow this down to the subset of the data. In the case of our dataset, it probably makes sense to only plot some of the larger restaurant chains. 
 
-You will need to use the `.keep_all = TRUE` argument so that all columns are kept!
-
-````{r}
-
-```
-
-If you've done these steps as expected, you should be left with a data frame of 18,964 rows. You can check this in the Environment panel or use the `nrow()` function. 
-
-````{r}
-
-```
-
-Lastly, save this data frame to a CSV file so we can return to it in a future exercise. 
+Use the `summary()` function to find out what the summary stats are for the number of restaurants that you calculated in `num_restaurant`. 
 
 ```{r}
-
+summary(num_restaurant$restaurant_n)
 ```
 
-## Exercise 2: Calculating Age Based on Birthdate {-}
 
-In this exercise, we will learn how to work with data objects. We will work with the package **lubridate**. Install and load the package **lubridate**.
+This shows us the median is 1. (meaning most restaurants only have one location). So it doesn't make sense to plot all those.
+
+Let's use `dplyr::filter()` to only keep restaurants with more than 2 locations and see how many that leaves us with. 
 
 ```{r}
-
+num_restaurant %>% dplyr::filter(restaurant_n > 2)
 ```
 
-Create an object called `mybday` that stores your birthday. Use the `ymd()` function to do this. 
+Great! That narrowed this down to 133 restaurants. 
 
-```{r}
-
-```
-
-Do this same thing, but this time use the `dmy()` function. 
-
-```{r}
-
-```
-
-Find a function in R that returns today's date and use it to save today's date to an object called `today`. You can use Google or the Help pane, or whatever you prefer. 
-
-```{r}
-
-```
-
-How would you calculate your age from these two objects? Go ahead and see if doing some math with `today` and `mybday` works. 
-
-```{r}
-
-```
-
-A number of days is not super easy to report as an age. 
-
-Use the function `time_length()` from the **lubridate** package to convert this to years. 
-
-```{r}
-
-```
-
-## Bonus Exercise
-
-Using what we've covered so far, write a function that will take a birthday and return in years, someone's age. 
-
-```{r}
-
-```
-
-Now add a warning message to this function that will warn a user to input their birthday as "yyyy-md-dd". 
-
-```{r}
-
-```
 
 ### Session Info
 

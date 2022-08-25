@@ -1,0 +1,200 @@
+---
+title: "Data Visuals Exercise 1"
+output: html_document
+date: "2022-08-22"
+---
+
+```{r}
+library(magrittr)
+library(ggplot2)
+```
+
+## Data Visuals Exercise 1
+
+We will also want the original `FastFoodRestaurants.csv` file from this dataset. 
+
+```{r}
+# Check for "FastFoodRestaurants.csv" in the data folder
+file.exists(file.path("data", "FastFoodRestaurants.csv"))
+```
+
+### Read in the data 
+
+Use the `readr::read_csv()` function to read in the `FastFoodRestaurants.csv` file
+
+Call it `ffood`.
+
+```{r}
+ffood <- readr::read_csv(file.path("data", "FastFoodRestaurants.csv"))
+```
+
+## How many restaurants of each name are there? 
+
+We're going to work on building a barplot with the information in `num_restaurant` but we'll have to do some cleaning first.
+
+Use the `dplyr::count()` function to find out how many restaurants of each `name` exist in the `ffood` data frame. 
+
+```{r}
+ffood %>% dplyr::count(name)
+```
+
+Look at how many entries there are for A&W! There's some categories in here that should probably be combined. So we should probably do some data cleaning to make these be the same. 
+
+Let's rename restaurants so that they are clumped together based on what they actually are. 
+
+If we notice there's a lot of typos having to do with apostrophes and capitalization. An easy way to get around this is to get rid of apostrophes and capitalization completely and then recode later. 
+
+The edits we make to `ffood` we will assign to a new name called `ffood_cleaned`. 
+
+Let's do two edits with a `dplyr::mutate()`
+1. First, make all the names in `name` variable go to lower case by using the `tolower()` function. 
+2. Next, let's delete all apostrophes. An easy way to do this is to use the `gsub()` function and replace ` 
+
+```{r}
+ffood_cleaned <- ffood %>% 
+  dplyr::mutate(name = tolower(name), 
+                name = gsub("'", "", name))
+```
+
+Let's rerun ` dplyr::count(name)` to see where this leaves us. Remember to use `ffood_cleaned` now instead of `ffood`. 
+
+```{r}
+ffood_cleaned %>% dplyr::count(name)
+```
+
+This helped get some categories sorted, but there's still a lot more with problems. Some of these problems are a great instance to use `dplyr::mutate` with `dplyr::case_when()` to recode variables in `ffood_cleaned`. 
+
+```{r}
+ffood_cleaned <- ffood_cleaned %>% 
+  dplyr::mutate(name = dplyr::case_when(
+    grepl("a&w", name, ignore.case = TRUE) ~ "a&w all american food", 
+    grepl("chick-", name) ~ "chick-fil-a",
+    grepl("captain ds", name) ~ "captain ds seafood",
+    grepl("kfc", name, ignore.case = TRUE) ~ "kentucky fried chicken", 
+    grepl("baja fresh", name) ~ "baja fresh",
+    grepl("7-eleven", name) ~ "7-11",
+    grepl("blimpie", name) ~ "blimpie",
+    grepl("carls jr", name) ~ "carls jr",
+    TRUE ~ name
+    ))
+```
+
+Now we can recount restaurants per `name` with `dplyr::count()` but this time from `ffood_cleaned`.  
+
+```{r}
+ffood_cleaned %>% dplyr::count(name)
+```
+
+This still isn't 100% cleaned. We could do a lot more work on this. But for now, let's try to make a plot. 
+
+
+Let's save the `dplyr::count()` as `num_restaurants`. 
+
+```{r}
+num_restaurants <- ffood_cleaned %>% dplyr::count(name)
+```
+
+## Start plotting!
+
+Let's plot the data in `num_restaurants`. 
+
+All ggplots start off with this same function `ggplot()` with the `aes()` function within it. 
+
+Let's start by making our basic ggplot object. Fill in the template object below by replacing `DATA_FRAME`, `X_VARIABLE`, and `Y_VARIABLE` with the appropriate objects. 
+
+```{r}
+# ggplot(DATA_FRAME, aes(X_VARIABLE, Y_VARIABLE))
+
+ggplot(num_restaurants, aes(name, n))
+```
+
+As you can see, the basic ggplot object isn't really anything and can't really be read. 
+
+To start to make this more readable, we first have to add a first layer by adding a specification of what kind of plot we'd like. In this instance we want a barplot, so we will use a `+` and add on the `geom_bar()` function. 
+
+Copy and paste the ggplot you started in the previous chunk but now add on a `+ geom_bar(stat = "identity")`. 
+
+```{r}
+ggplot(num_restaurants, aes(name, n)) + 
+  geom_bar(stat = "identity")
+```
+Now we have data plotted but its still pretty unintelligible. The labels are too small and there's too many data points to make sense of this. 
+
+One way to make this more legible is to narrow this down to the subset of the data. In the case of our dataset, it probably makes sense to only plot some of the larger restaurant chains. 
+
+Use the `summary()` function to find out what the summary stats are for the number of restaurants that you calculated in `num_restaurant`. 
+
+```{r}
+summary(num_restaurants$n)
+```
+
+
+This shows us the median is 1. (meaning most restaurants only have one location). So it doesn't make sense to plot all those.
+
+Let's use `dplyr::filter()` to only keep restaurants with more than 10 locations and see how many that leaves us with. Let's save this as `top_num_restaurants`. 
+
+```{r}
+top_num_restaurants <- num_restaurants %>% dplyr::filter(n > 10)
+
+top_num_restaurants
+```
+
+Great! That narrowed this down to 108 restaurants. Let's try to plot it again.
+
+```{r}
+ggplot(top_num_restaurants, aes(name, n)) + 
+  geom_bar(stat = "identity")
+```
+This is better but it would be better if data were in order of most to least. Let's do that. 
+We can use a handy function `reorder()` to do this. 
+
+```{r}
+ggplot(top_num_restaurants, aes(reorder(name,(-n)), n)) + 
+  geom_bar(stat = "identity")
+```
+
+This is better but we still can't read the labels. 
+
+Let's add a layer that will turn the text and make it more legible.
+
+```{r}
+ggplot(top_num_restaurants, aes(reorder(name,(-n)), n)) + 
+  geom_bar(stat = "identity") + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+
+Gray is pretty boring. We can add nice colors pretty easily by using ggthemes!
+
+See a longer list of themes to choose from her: https://ggplot2.tidyverse.org/reference/ggtheme.html
+
+Try some different themes on this barplot and see what you like best. 
+
+```{r}
+ggplot(top_num_restaurants, aes(reorder(name,(-n)), n)) + 
+  geom_bar(stat = "identity") + 
+  theme_classic() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+We don't really want `reorder(name, (-n))` to be the name of our x axis. Add a new layer to this plot that uses the `xlab()` function to rename this. (you may have guessed there's also a `ylab()` function to rename the y axis if you needed to)
+
+```{r}
+ggplot(top_num_restaurants, aes(reorder(name,(-n)), n)) + 
+  geom_bar(stat = "identity") + 
+  theme_classic() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
+  xlab("restaurant")
+```
+
+Lastly, let's use the `ggsave()` function to save this plot to a PNG. Make sure to save it to a separate folder of `results`. 
+
+```{r}
+dir.create("results", showWarnings = FALSE)
+
+ggsave(file.path("results", "restaurant_barplot.png"))
+```
+
+### Session Info
+
+```{r}
+sessionInfo()
+```
