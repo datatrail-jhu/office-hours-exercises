@@ -1,0 +1,72 @@
+---
+title: "data viz exercise 2"
+output: html_document
+date: "2022-09-07"
+---
+
+
+```{r}
+library(ggplot2)
+```
+
+# Data Visualization Exercises 
+
+In this notebook, we have 4 datasets set up for you. Make plots with these datasets that tell a story. 
+
+You can use these for inspiration: 
+
+- [ggplot2 examples](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)
+- [ggplot2 cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf)
+
+## StarWars
+
+```{r}
+starwars_df <- dplyr::starwars %>% 
+  dplyr::mutate(bmi = mass/(height/100)^2)
+```
+
+```{r}
+# Make a plot with starwars_df
+```
+
+### Airbnb 
+
+Using these data: 
+You can get the airbnb dataset here: https://www.kaggle.com/datasets/arianazmoudeh/airbnbopendata
+
+```{r}
+airbnb_df <- readr::read_csv(file.path("data", "Airbnb_Open_Data.csv"))
+```
+
+```{r}
+# Make a plot with airbnb_df
+```
+
+## Huron Lake levels
+
+```{r}
+huron_df <- data.frame(level = datasets::LakeHuron, year = 1875:1972)
+```
+
+```{r}
+# Make a plot with huron_df
+```
+
+## Tooth Growth Data
+
+```{r}
+tooth_growth_df <- ToothGrowth %>%
+  dplyr::mutate(dose = as.factor(dose))
+```
+
+```{r}
+# Make a plot with tooth_growth_df
+```
+
+### Session info 
+
+```{r}
+sessionInfo()
+```
+
+
