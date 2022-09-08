@@ -1,0 +1,131 @@
+---
+title: "data viz exercise 2"
+output: html_document
+date: "2022-09-07"
+---
+
+
+```{r}
+library(ggplot2)
+```
+
+# Data Visualization Exercises 
+
+In this notebook, we have 4 datasets set up for you. Make plots with these datasets that tell a story. 
+
+You can use these for inspiration: 
+
+- [ggplot2 examples](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html)
+- [ggplot2 cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf)
+
+## StarWars
+
+```{r}
+starwars_df <- dplyr::starwars %>% 
+  dplyr::mutate(bmi = mass/(height/100)^2)
+```
+
+```{r}
+# Make a plot with starwars_df
+starwars_df %>% 
+  dplyr::filter(!is.na(bmi)) %>% 
+  ggplot(aes(reorder(name, -bmi), bmi, fill = homeworld)) +
+  geom_bar(stat = "identity") + 
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), legend.position = "none") + 
+  xlab("")
+```
+
+### Airbnb 
+
+Using these data: 
+You can get the airbnb dataset here: https://www.kaggle.com/datasets/arianazmoudeh/airbnbopendata
+
+```{r}
+airbnb_df <- readr::read_csv(file.path("data", "Airbnb_Open_Data.csv"))
+
+if (!"janitor" %in% installed.packages()){
+  install.packages("janitor")
+}
+airbnb_df <- janitor::clean_names(airbnb_df) %>% 
+  # some cleaning
+  dplyr::mutate(service_fee = as.numeric(gsub("\\$", "", service_fee)), 
+                price = as.numeric(gsub("\\$", "", price)), 
+                neighbourhood_group = case_when(
+                  neighbourhood_group == "brookln" ~ "Brooklyn",
+                  neighbourhood_group == "manhatan" ~ "Manhattan",
+                  TRUE ~ neighbourhood_group)
+                ) %>% 
+  # Remove rows that don't have a price listed
+  dplyr::filter(!is.na(price))
+```
+
+```{r}
+summary(airbnb_df$price)
+```
+
+```{r}
+airbnb_df %>% 
+  ggplot(aes(price, color = neighbourhood_group)) + 
+  geom_density() + 
+  theme_minimal()
+```
+
+```{r}
+# Make a plot with airbnb_df
+airbnb_df %>% 
+  ggplot(aes(neighbourhood_group, price)) + 
+  geom_violin()
+```
+
+```{r}
+airbnb_df %>% 
+  ggplot(aes(price, number_of_reviews)) + 
+  geom_point() + 
+  theme_minimal()
+```
+
+
+```{r}
+airbnb_df %>% 
+  dplyr::mutate(review_rate_number = as.factor(review_rate_number)) %>%
+  ggplot(aes(review_rate_number, price, color = neighbourhood_group)) + 
+  geom_violin() + 
+  theme_minimal()
+```
+
+## Huron Lake levels
+
+```{r}
+huron_df <- data.frame(level = datasets::LakeHuron, year = 1875:1972)
+```
+
+```{r}
+# Make a plot with huron_df
+ggplot(huron_df, aes(year, level)) + 
+  geom_line() + 
+  theme_minimal() + 
+  ylab("level in feet")
+```
+
+## Tooth Growth Data
+
+```{r}
+tooth_growth_df <- ToothGrowth %>%
+  dplyr::mutate(dose = as.factor(dose))
+```
+
+```{r}
+# Make a plot with tooth_growth_df
+tooth_growth_df %>% 
+  ggplot(aes(supp, len, fill = dose)) + 
+  geom_violin()
+```
+
+### Session info 
+
+```{r}
+sessionInfo()
+```
+
+
