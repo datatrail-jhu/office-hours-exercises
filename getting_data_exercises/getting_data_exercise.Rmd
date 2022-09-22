@@ -1,0 +1,59 @@
+---
+title: "Getting Data"
+author: "DataTrail"
+date: "2022-09-22"
+output: html_document
+---
+
+## Exercise 1: Testing URLs
+
+1. Open up a new R script file (.R)
+2. In this new script file, our goal is to create a function that takes a URL as input and returns a logical that tells us if the URL is real or not.
+3. Let's use the httr package for this. Here's a useful tutorial: https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html
+4. Test your resulting function with a URL that you know works as well as a fake URL that should fail. You will want your function to properly say TRUE when the URL is real and FALSE when the URL is fake.
+
+```{r}
+source(test_url.R)
+
+# Should print out TRUE
+test_url("https://www.datatrail.org/")
+
+# Should print out FALSE
+test_url("https://www.fakeurlauisdbviuabsduivbaiu.com")
+
+# Should fail because 404
+test_url("https://github.com/jhudsl/intro_to_r2")
+```
+
+## Exercise 2: Reading JSON files
+
+1. Open up a new R Markdown file in RStudio.
+2. Download this JSON file from GitHub: https://raw.githubusercontent.com/bahamas10/css-color-names/master/css-color-names.json
+3. Use the jsonlite package to read in this file as a list. Here's a useful tutorial: https://cran.r-project.org/web/packages/jsonlite/vignettes/json-aaquickstart.html
+4. Let's examine this resulting list. Subset this list to only contain the `peachpuff` color and its hex code.
+
+```{r }
+library(jsonlite)
+```
+
+```{r}
+colors_json <- jsonlite::read_json("https://raw.githubusercontent.com/bahamas10/css-color-names/master/css-color-names.json")
+```
+
+```{r}
+head(colors_json)
+```
+
+```{r}
+colors_json$peachpuff
+```
+
+## Group Exercise 3: Let's chat about RSQLite
+
+1. Here's this package's page: https://cran.r-project.org/web/packages/RSQLite/index.html 
+2. Let's walk through together how we digest a package's documentation and know how to use it. 
+3. RSQLite uses SQL -- a whole other language! So it's a bit of endeavor to use. But it can be a very handy tool if you have big databases.
+
+- SQL commands: https://www.w3schools.com/sql/ 
+- Practice SQL databases: https://learnsql.com/blog/free-online-datasets-to-practice-sql/
+

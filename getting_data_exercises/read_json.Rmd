@@ -1,0 +1,28 @@
+---
+title: "Read a JSON"
+author: "DataTrail"
+date: "2022-09-22"
+output: html_document
+---
+
+```{r }
+library(jsonlite)
+```
+
+```{r}
+colors_json <- jsonlite::read_json("https://raw.githubusercontent.com/bahamas10/css-color-names/master/css-color-names.json")
+```
+
+```{r}
+head(colors_json)
+```
+
+```{r}
+colors_json$peachpuff
+```
+
+## Print out session info
+
+```{r}
+sessionInfo()
+```
