@@ -1,0 +1,171 @@
+---
+title: "Playing with stats"
+author: "Candace Savonen"
+date: '2022-09-29'
+output: html_document
+---
+
+# Playing with stats. 
+
+Sometimes stats are very abstract and hard to understand. In this exercise, we are going to make visuals of fake data that we can play with to try to get an intuitive sense of some common statistics. 
+
+### Other places to play with stats: 
+
+- https://psu-eberly.shinyapps.io/Central_Limit_Theorem/
+- https://psu-eberly.shinyapps.io/Descriptive_Statistics/
+- https://sites.psu.edu/shinyapps/category/introductory-apps/
+- http://www.rossmanchance.com/applets/
+- https://www.lock5stat.com/StatKey/
+
+## Set up 
+
+We'll need these packages. 
+
+```{r}
+library(magrittr)
+library(ggplot2)
+```
+
+We're going to be doing a lot of number generation so we are going to set the seed so we can replicate what we do here. 
+
+```{r}
+set.seed(1234)
+```
+
+## Create data 
+
+R has a group of functions that make fake data for you that follow particular distributions (shapes of data). 
+
+```{r}
+fake_data <- rnorm(100, mean = 10, sd = 1)
+```
+
+Use some commands to explore what `fake_data` looks like. 
+
+```{r}
+
+```
+
+We're going to use a wrapper function to make a bunch of density plots. 
+
+```{r}
+density_plot <- function(dataset, title = "", type = "density") {
+  qplot(dataset, geom = type) + 
+    theme_minimal() + 
+    geom_density(fill = "lightblue") + 
+    ggtitle(title)
+}
+```
+
+We can use this custom function like this: 
+
+```{r}
+density_plot(fake_data)
+```
+
+## Play around with normal distributions 
+
+### Play around with the mean 
+
+We can re-run this plot to visualize it but play with the numbers we gave it. 
+
+Let's change the mean to 200 and rerun. 
+
+```{r}
+density_plot(rnorm(100, mean = 200, sd = 1), 
+             title = "Mean of 200")
+```
+
+Play around with the mean by re running the code above and see how the shape changes. 
+Try 3 different means. 
+
+```{r}
+
+```
+
+
+### Play around with the standard deviation 
+
+Now let's do the same thing but play around with the standard deviation. 
+
+```{r}
+density_plot(rnorm(100, mean = 10, sd = 100), 
+             title = "SD of 10") 
+```
+
+Try out 3 more standard deviations here. 
+
+```{r}
+
+```
+
+### What's central tendency? 
+
+How likely is the data to be a particular value? That's what means/averages try to get at. 
+
+```{r}
+sd_df <- data.frame(data = c(rnorm(100, mean = 10, sd = 1), 
+                             rnorm(100, mean = 10, sd = 2),
+                             rnorm(100, mean = 10, sd = 3),
+                             rnorm(100, mean = 10, sd = 10)), 
+                    sd = c(rep(1, 100), 
+                           rep(2, 100), 
+                           rep(3, 100), 
+                           rep(10, 100)))
+```
+
+Let's plot these next to each other to get an idea of how SD affects a distribution. 
+
+```{r}
+ggplot(sd_df, aes(data)) + 
+  geom_density(fill = "lightblue") + 
+  facet_wrap(~sd) + 
+  theme_minimal() 
+```
+
+## Play around with normal distributions 
+
+Normal distributions are not the only kinds of shapes of data! 
+
+Look up for ?Distributions to see a full list of functions that can make different distributions. 
+
+We'll display a few here!
+
+### Binomial distribution 
+
+Here's a binomial distribution! See how its got two peaks? 
+
+```{r}
+density_plot(rbinom(100, size = 1, prob = .5))
+```
+
+### Log normal distribution 
+
+Here's a log normal distribution! See how its skewed to one side?
+
+```{r}
+density_plot(rlnorm(100, 0))
+```
+### Uniform distribution
+
+Here's uniform distribution -- basically any number is as likely as the others to be picked. 
+
+```{r}
+density_plot(runif(100))
+```
+
+### Poisson distribution
+
+Here's a poisson distribution! See how its numbers are integers? 
+
+```{r}
+density_plot(rpois(100, 1), type = "histogram")
+```
+
+## Print out session info 
+
+Session info is a good thing to print out at the end of your notebooks so that you (and other folks) referencing your notebooks know what software versions and libraries you used to run the notebook. 
+
+```{r}
+sessionInfo()
+```
