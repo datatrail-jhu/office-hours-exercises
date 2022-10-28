@@ -2,7 +2,7 @@
 
 Your responsibilities as a DataTrail tutor:
 
-- Attending and leading office hours - have an exercise ready but also leave lots of time for questions. There are office hours exercises you can use here: https://github.com/datatrail-jhu/office-hours-exercises or make up your own depending on the needs of the cohort.
+- Attending and leading office hours - have an exercise ready but also leave lots of time for questions. There are [office hours exercises you can use here](https://github.com/datatrail-jhu/office-hours-exercises) or make up your own depending on the needs of the cohort.
 - Responding to student questions inside or outside of office hours.
 - Tracking or making fixes to curriculum as needed
 - Helping Ashley track the student's progress in the course using the Scholar Tracking Sheet.
@@ -15,13 +15,25 @@ Your responsibilities as a DataTrail tutor:
 
 ### For communication and office hours:
 - [ ] DataTrail BaseCamp: (this will be cohort specific)
-- [ ] DataTrail RStudio Cloud Workspace: https://rstudio.cloud/spaces/3919/join?access_code=RUUQ-eEgKea0oMF7EJy4UePldyBBMu7d0amv2KFC
-- [ ] Scholar Tracking sheet template: https://docs.google.com/spreadsheets/d/1FZ2bgBvaadZqY4ver-34m7WB1P9TAE-bQZ4Ps9fSusQ/edit#gid=0 (this will be cohort specific)
+- [ ] [DataTrail RStudio Cloud Workspace](https://rstudio.cloud/spaces/3919/join?access_code=RUUQ-eEgKea0oMF7EJy4UePldyBBMu7d0amv2KFC)
+- [ ] [Scholar Tracking sheet template](https://docs.google.com/spreadsheets/d/1FZ2bgBvaadZqY4ver-34m7WB1P9TAE-bQZ4Ps9fSusQ/edit#gid=0) (this will be cohort specific)
 
 ### For course edits:
 - [ ] DataTrail Leanpub course: `datatrailteam@gmail.com` password: `DataAreFunYay!`
-- [ ] DataTrail GitHub: https://github.com/datatrail-jhu
-- [ ] DataTrail Google Drive folder: https://drive.google.com/drive/folders/1llAQt0f5Pu_wF1e5hc40cdpqUnOHpDo3
+  - Go to Author > Courses > DataTrail
+- [ ] [DataTrail GitHub organization](https://github.com/datatrail-jhu)
+- [ ] [DataTrail Google Drive folder](https://drive.google.com/drive/folders/1llAQt0f5Pu_wF1e5hc40cdpqUnOHpDo3)
+
+#### Important repositories on DataTrail GitHub org
+
+- The course curriculum: https://github.com/datatrail-jhu/DataTrail
+  - DataTrail is hosted and maintained using OTTR; so if you need to make edits seek this for help: https://www.ottrproject.org/index.html For further help with OTTR, contact Carrie or Ava.
+- The course curriculum as published on Leanpub (with quizzes): https://github.com/datatrail-jhu/DataTrail_Quizzes
+- Office hours exercises: https://github.com/datatrail-jhu/office-hours-exercises
+- Project solutions: https://github.com/datatrail-jhu/DataTrail_Projects_Solutions
+- Projects sans the solutions: https://github.com/datatrail-jhu/DataTrail_Projects
+- Datasets to play with: https://github.com/datatrail-jhu/open-datasets
+- Swirl modules that are part of the quizzes: https://github.com/datatrail-jhu/datatrail-swirl
 
 ### To see the curriculum
 - For easy access to the curriculum without logging in: https://datatrail-jhu.github.io/DataTrail/index.html (You won't be able to see the quizzes here though)
@@ -32,17 +44,6 @@ Your responsibilities as a DataTrail tutor:
 1. Click Add Course to Cart
 1. Click “Checkout with Free Purchase”
 1. You should be able to go to the 3 line dropdown menu > Library > Courses > DataTrail > Go to Course > Start the course
-
-## What's on GitHub?
-
-- The course curriculum: https://github.com/datatrail-jhu/DataTrail
-  - DataTrail is hosted and maintained using OTTR; so if you need to make edits seek this for help: https://www.ottrproject.org/index.html For further help with OTTR, contact Carrie or Ava. 
-- The course curriculum as published on Leanpub (with quizzes): https://github.com/datatrail-jhu/DataTrail_Quizzes
-- Office hours exercises: https://github.com/datatrail-jhu/office-hours-exercises
-- Project solutions: https://github.com/datatrail-jhu/DataTrail_Projects_Solutions
-- Projects sans the solutions: https://github.com/datatrail-jhu/DataTrail_Projects
-- Datasets to play with: https://github.com/datatrail-jhu/open-datasets
-- Swirl modules that are part of the quizzes: https://github.com/datatrail-jhu/datatrail-swirl
 
 ## Where to go for different scenarios
 
@@ -59,6 +60,7 @@ Your responsibilities as a DataTrail tutor:
 | There's a problem with the curriculum (but not a quiz) that IS immediate| File a PR here: https://github.com/datatrail-jhu/DataTrail but then post a BaseCamp message alerting other students to the problem and what they should do |
 https://www.ottrproject.org/examples.html#Setting_up_quizzes but then post a BaseCamp message alerting other students to the problem and what they should do |
 | There's a problem with a swirl module that IS immediate| Follow instructions on this README about how to update a swirl module: https://github.com/datatrail-jhu/datatrail-swirl After you've fixed and repacked the problematic swirl course, you will need to upload the fixed .swc and file a PR to here https://github.com/datatrail-jhu/scn in order for students to be able to access the fixed module. They will need to reinstall the problematic swirl module|
+|A course image needs to be updated| Try to find the [google slide here](https://drive.google.com/drive/folders/1llAQt0f5Pu_wF1e5hc40cdpqUnOHpDo3) Note at this point in time the slides are not reorganized in the structure of the reorganized curriculum :( Once the image is updated, if you [re-render the DataTrail curriculum using the GitHub action here](https://github.com/datatrail-jhu/DataTrail/actions/workflows/render-all.yml)|
 
 ## Student Instructions you should be familiar with:
 
