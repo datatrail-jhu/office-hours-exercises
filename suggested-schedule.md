@@ -16,14 +16,14 @@ For every office hours:
 |Office Hours 6| [Getting Data 2](https://datatrail-jhu.github.io/DataTrail/getting-data.html)| - [Covering data frames exercise 1](https://github.com/datatrail-jhu/office-hours-exercises/blob/main/intro_r_exercises/intro_r_exercise_1.Rmd) <br> - [Data frames exercise 2](https://github.com/datatrail-jhu/office-hours-exercises/blob/main/intro_r_exercises/intro_r_exercise_2.Rmd)| - Understand data frames <br> - Leaving more time for R questions
 |Office Hours 7| [Getting Data 3](https://datatrail-jhu.github.io/DataTrail/getting-data.html)| - [Cover file paths with RStudio demonstrations](https://github.com/datatrail-jhu/office-hours-exercises/blob/main/file_organization_exercises/file_organization_exercise.Rmd) - [Demonstrate R Markdown functionality](https://datatrail-jhu.github.io/DataTrail/r-markdown.html)| - Understand file paths <br> - Be able to read in a CSV file <br> - Be able to use an R Markdown - Be able to upload a file to RStudio - Practice loading libraries with `library()`
 |Office Hours 8| [Getting Data 4](https://datatrail-jhu.github.io/DataTrail/getting-data.html)| [Preview Getting Data project](https://datatrail-jhu.github.io/DataTrail/getting-data-project.html) specifically [making sure everyone has made their Leanpub data googlesheet](https://datatrail-jhu.github.io/DataTrail/google-documents.html) | - Prep for Getting Data project <br> - Look out for googlesheets credential issues <br> - Practice using `googlesheets4`|
-|Office Hours 9| [Cleaning the Data 1](https://datatrail-jhu.github.io/DataTrail/cleaning-the-data.html)| - Leave some time for wrapping up the Getting Data project <br> -
-|Office Hours 10| [Cleaning the Data 2](https://datatrail-jhu.github.io/DataTrail/cleaning-the-data.html)
-|Office Hours 11| [Cleaning the Data 3](https://datatrail-jhu.github.io/DataTrail/cleaning-the-data.html)
-|Office Hours 12| [Cleaning the Data 4](https://datatrail-jhu.github.io/DataTrail/cleaning-the-data.html)
-|Office Hours 13
-|Office Hours 14
-|Office Hours 15
-|Office Hours 16
+|Office Hours 9| [Cleaning the Data 1](https://datatrail-jhu.github.io/DataTrail/cleaning-the-data.html)| - Leave some time for wrapping up the Getting Data project <br> - Start on [Tidying exercise 1](https://github.com/datatrail-jhu/office-hours-exercises/blob/main/data_tidying_exercises/data_tidying_exercise_1_unsolved.Rmd)| - Have Getting Data Project wrapped up <br> - Get folks comfortable with the idea of tidy data <br> - Show them about [TidyDataTutor](https://tidydatatutor.com/vis.html)
+|Office Hours 10| [Cleaning the Data 2](https://datatrail-jhu.github.io/DataTrail/cleaning-the-data.html)| - Leave time for wrapping up Tidying exercise 1 <br> - Can start [Tidying exercise 2](https://github.com/datatrail-jhu/office-hours-exercises/blob/main/data_tidying_exercises/data_tidying_exercise_2_unsolved.Rmd)| - Become more comfortable manipulating strings for data cleaning
+|Office Hours 11| [Cleaning the Data 3](https://datatrail-jhu.github.io/DataTrail/cleaning-the-data.html)| - Can finish up [Tidying exercise 2](https://github.com/datatrail-jhu/office-hours-exercises/blob/main/data_tidying_exercises/data_tidying_exercise_2_unsolved.Rmd) <br> - Can [introduce a tidytuesday case](https://github.com/rfordatascience/tidytuesday) if ahead of schedule | - Becoming more comfortable with cleaning data
+|Office Hours 12| [Cleaning the Data 4](https://datatrail-jhu.github.io/DataTrail/cleaning-the-data.html)| - Introduce [Cleaning the Data Project](https://datatrail-jhu.github.io/DataTrail/cleaning-data-project.html) <br>  - As a group, walk [through the joining exercises in the material](https://datatrail-jhu.github.io/DataTrail/joining-data.html)| - Understand joins <br> - Be ready to clean up a dataset from soup to nuts |
+|Office Hours 13| [Plotting the data 1](https://datatrail-jhu.github.io/DataTrail/plotting-the-data.html)| - Cover [what makes a good plot](https://datatrail-jhu.github.io/DataTrail/good-plots.html)| 
+|Office Hours 14| [Plotting the data 2](https://datatrail-jhu.github.io/DataTrail/plotting-the-data.html)|
+|Office Hours 15| [Plotting the data 3](https://datatrail-jhu.github.io/DataTrail/plotting-the-data.html)|
+|Office Hours 16| [Plotting the data 4](https://datatrail-jhu.github.io/DataTrail/plotting-the-data.html)|
 |Office Hours 17
 |Office Hours 18
 |Office Hours 19
