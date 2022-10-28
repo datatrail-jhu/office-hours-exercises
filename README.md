@@ -36,6 +36,7 @@ Your responsibilities as a DataTrail tutor:
 ## What's on GitHub?
 
 - The course curriculum: https://github.com/datatrail-jhu/DataTrail
+  - DataTrail is hosted and maintained using OTTR; so if you need to make edits seek this for help: https://www.ottrproject.org/index.html For further help with OTTR, contact Carrie or Ava. 
 - The course curriculum as published on Leanpub (with quizzes): https://github.com/datatrail-jhu/DataTrail_Quizzes
 - Office hours exercises: https://github.com/datatrail-jhu/office-hours-exercises
 - Project solutions: https://github.com/datatrail-jhu/DataTrail_Projects_Solutions
@@ -54,9 +55,9 @@ Your responsibilities as a DataTrail tutor:
 |A student has encountered a swirl question that is unclear| You can see the answers here: https://github.com/datatrail-jhu/datatrail-swirl/tree/main/DataTrail_Complete |
 |A swirl module question isn't clear or generally unfair| See here about how to give a student credit manually: https://github.com/datatrail-jhu/datatrail-swirl#to-give-a-student-credit-manually |
 |A student is having troubles with a DataTrail project that is unclear| See possible 'solutions' here: https://github.com/datatrail-jhu/DataTrail_Projects_Solutions |
-|There's a problem with the curriculum that isn't immediate| File a GitHub issue here: https://github.com/datatrail-jhu/DataTrail |
+|There's a problem with the curriculum (quiz or something else) that isn't immediate| File a GitHub issue here: https://github.com/datatrail-jhu/DataTrail |
 | There's a problem with the curriculum (but not a quiz) that IS immediate| File a PR here: https://github.com/datatrail-jhu/DataTrail but then post a BaseCamp message alerting other students to the problem and what they should do |
-| There's a problem with the a *quiz* that IS immediate| File a PR here: https://github.com/datatrail-jhu/DataTrail_Quizzes/tree/main/quizzes but then post a BaseCamp message alerting other students to the problem and what they should do |
+https://www.ottrproject.org/examples.html#Setting_up_quizzes but then post a BaseCamp message alerting other students to the problem and what they should do |
 | There's a problem with a swirl module that IS immediate| Follow instructions on this README about how to update a swirl module: https://github.com/datatrail-jhu/datatrail-swirl After you've fixed and repacked the problematic swirl course, you will need to upload the fixed .swc and file a PR to here https://github.com/datatrail-jhu/scn in order for students to be able to access the fixed module. They will need to reinstall the problematic swirl module|
 
 ## Student Instructions you should be familiar with:
