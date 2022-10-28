@@ -26,17 +26,19 @@ Your responsibilities as a DataTrail tutor:
 
 #### Important repositories on DataTrail GitHub org
 
-- The course curriculum: https://github.com/datatrail-jhu/DataTrail
-  - DataTrail is hosted and maintained using OTTR; so if you need to make edits seek this for help: https://www.ottrproject.org/index.html For further help with OTTR, contact Carrie or Ava.
-- The course curriculum as published on Leanpub (with quizzes): https://github.com/datatrail-jhu/DataTrail_Quizzes
-- Office hours exercises: https://github.com/datatrail-jhu/office-hours-exercises
-- Project solutions: https://github.com/datatrail-jhu/DataTrail_Projects_Solutions
-- Projects sans the solutions: https://github.com/datatrail-jhu/DataTrail_Projects
-- Datasets to play with: https://github.com/datatrail-jhu/open-datasets
-- Swirl modules that are part of the quizzes: https://github.com/datatrail-jhu/datatrail-swirl
+- The course curriculum: [datatrail-jhu/DataTrail](https://github.com/datatrail-jhu/DataTrail)
+  - DataTrail is hosted and maintained using OTTR; so if you need to make edits [seek this for help](https://www.ottrproject.org/index.html). For further help with OTTR, contact Carrie or Ava.
+- The course curriculum as published on Leanpub (with quizzes): [datatrail-jhu/DataTrail_Quizzes](https://github.com/datatrail-jhu/DataTrail_Quizzes)
+- Office hours exercises: [datatrail-jhu/office-hours-exercises](https://github.com/datatrail-jhu/office-hours-exercises)
+- Project solutions: [datatrail-jhu/DataTrail_Projects_Solutions](https://github.com/datatrail-jhu/DataTrail_Projects_Solutions)
+- Projects sans the solutions: [datatrail-jhu/DataTrail_Projects](https://github.com/datatrail-jhu/DataTrail_Projects)
+- Datasets to play with: [datatrail-jhu/open-datasets](https://github.com/datatrail-jhu/open-datasets)
+- Swirl modules that are part of the quizzes: [datatrail-jhu/datatrail-swirl](https://github.com/datatrail-jhu/datatrail-swirl)
 
 ### To see the curriculum
-- For easy access to the curriculum without logging in: https://datatrail-jhu.github.io/DataTrail/index.html (You won't be able to see the quizzes here though)
+
+- For [easy access to the curriculum without logging in](https://datatrail-jhu.github.io/DataTrail/index.html) (You won't be able to see the quizzes here though)
+
 - To see the Leanpub version as students see it:
 1. Go to Leanpub login: https://leanpub.com/login
 1. Go to the DataTrail course here: https://leanpub.com/c/datatrail
@@ -52,15 +54,16 @@ Your responsibilities as a DataTrail tutor:
 |A student has a question about payments, attendance policy, or other admin parts of the program | Send them to Ashley|
 |A student has a very specific question that they've DM'ed you| Answer it in DM's or schedule a zoom call or in person call with them to cover it.|
 |A student has a question that's applicable to the whole class| Answer it in DM's but then probably write a BaseCamp message about it for others to see. Maybe also cover it in office hours|
-|A student has encountered a quiz question that is unclear| You can see the answers here: https://github.com/datatrail-jhu/DataTrail_Quizzes/tree/main/quizzes `C)` or capitalized answers are the correct ones|
-|A student has encountered a swirl question that is unclear| You can see the answers here: https://github.com/datatrail-jhu/datatrail-swirl/tree/main/DataTrail_Complete |
-|A swirl module question isn't clear or generally unfair| See here about how to give a student credit manually: https://github.com/datatrail-jhu/datatrail-swirl#to-give-a-student-credit-manually |
-|A student is having troubles with a DataTrail project that is unclear| See possible 'solutions' here: https://github.com/datatrail-jhu/DataTrail_Projects_Solutions |
-|There's a problem with the curriculum (quiz or something else) that isn't immediate| File a GitHub issue here: https://github.com/datatrail-jhu/DataTrail |
-| There's a problem with the curriculum (but not a quiz) that IS immediate| File a PR here: https://github.com/datatrail-jhu/DataTrail but then post a BaseCamp message alerting other students to the problem and what they should do |
-https://www.ottrproject.org/examples.html#Setting_up_quizzes but then post a BaseCamp message alerting other students to the problem and what they should do |
-| There's a problem with a swirl module that IS immediate| Follow instructions on this README about how to update a swirl module: https://github.com/datatrail-jhu/datatrail-swirl After you've fixed and repacked the problematic swirl course, you will need to upload the fixed .swc and file a PR to here https://github.com/datatrail-jhu/scn in order for students to be able to access the fixed module. They will need to reinstall the problematic swirl module|
+|A student has encountered a quiz question that is unclear| [You can see the answers here](https://github.com/datatrail-jhu/DataTrail_Quizzes/tree/main/quizzes) `C)` or capitalized answers are the correct ones|
+|A student has encountered a swirl question that is unclear| [You can see the answers here](https://github.com/datatrail-jhu/datatrail-swirl/tree/main/DataTrail_Complete) |
+|A swirl module question isn't clear or generally unfair| [See here about how to give a student credit manually](https://github.com/datatrail-jhu/datatrail-swirl#to-give-a-student-credit-manually) |
+|A student is having troubles with a DataTrail project that is unclear| [See possible 'solutions' here](https://github.com/datatrail-jhu/DataTrail_Projects_Solutions) |
+|There's a problem with the curriculum (quiz or something else) that isn't immediate| [File a GitHub issue here](https://github.com/datatrail-jhu/DataTrail) |
+| There's a problem with the curriculum (but not a quiz) that IS immediate| [File a PR here](https://github.com/datatrail-jhu/DataTrail) but then post a BaseCamp message alerting other students to the problem and what they should do |
+| There's a problem with the a quiz that IS immediate| [See instructions here about how quizzes are set up](https://www.ottrproject.org/examples.html#Setting_up_quizzes) but then post a BaseCamp message alerting other students to the problem and what they should do |
+| There's a problem with a swirl module that IS immediate| Follow instructions on [this README about how to update a swirl module](https://github.com/datatrail-jhu/datatrail-swirl) After you've fixed and repacked the problematic swirl course, you will need to [upload the fixed .swc and file a PR to here](https://github.com/datatrail-jhu/scn) in order for students to be able to access the fixed module. They will need to reinstall the problematic swirl module|
 |A course image needs to be updated| Try to find the [google slide here](https://drive.google.com/drive/folders/1llAQt0f5Pu_wF1e5hc40cdpqUnOHpDo3) Note at this point in time the slides are not reorganized in the structure of the reorganized curriculum :( Once the image is updated, if you [re-render the DataTrail curriculum using the GitHub action here](https://github.com/datatrail-jhu/DataTrail/actions/workflows/render-all.yml)|
+|A student is working on a project and needs to find a dataset to use| Show them the suggested datasets to play with here: [datatrail-jhu/open-datasets](https://github.com/datatrail-jhu/open-datasets)
 
 ## Student Instructions you should be familiar with:
 
