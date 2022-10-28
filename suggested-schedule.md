@@ -20,14 +20,14 @@ For every office hours:
 |Office Hours 10| [Cleaning the Data 2](https://datatrail-jhu.github.io/DataTrail/cleaning-the-data.html)| - Leave time for wrapping up Tidying exercise 1 <br> - Can start [Tidying exercise 2](https://github.com/datatrail-jhu/office-hours-exercises/blob/main/data_tidying_exercises/data_tidying_exercise_2_unsolved.Rmd)| - Become more comfortable manipulating strings for data cleaning
 |Office Hours 11| [Cleaning the Data 3](https://datatrail-jhu.github.io/DataTrail/cleaning-the-data.html)| - Can finish up [Tidying exercise 2](https://github.com/datatrail-jhu/office-hours-exercises/blob/main/data_tidying_exercises/data_tidying_exercise_2_unsolved.Rmd) <br> - Can [introduce a tidytuesday case](https://github.com/rfordatascience/tidytuesday) if ahead of schedule | - Becoming more comfortable with cleaning data
 |Office Hours 12| [Cleaning the Data 4](https://datatrail-jhu.github.io/DataTrail/cleaning-the-data.html)| - Introduce [Cleaning the Data Project](https://datatrail-jhu.github.io/DataTrail/cleaning-data-project.html) <br>  - As a group, walk [through the joining exercises in the material](https://datatrail-jhu.github.io/DataTrail/joining-data.html)| - Understand joins <br> - Be ready to clean up a dataset from soup to nuts |
-|Office Hours 13| [Plotting the data 1](https://datatrail-jhu.github.io/DataTrail/plotting-the-data.html)| - Cover [what makes a good plot](https://datatrail-jhu.github.io/DataTrail/good-plots.html)| 
-|Office Hours 14| [Plotting the data 2](https://datatrail-jhu.github.io/DataTrail/plotting-the-data.html)|
-|Office Hours 15| [Plotting the data 3](https://datatrail-jhu.github.io/DataTrail/plotting-the-data.html)|
-|Office Hours 16| [Plotting the data 4](https://datatrail-jhu.github.io/DataTrail/plotting-the-data.html)|
-|Office Hours 17
-|Office Hours 18
-|Office Hours 19
-|Office Hours 20
+|Office Hours 13| [Plotting the data 1](https://datatrail-jhu.github.io/DataTrail/plotting-the-data.html)| - Leave time for covering Cleaning Data Project wrap up <br> - Cover [what makes a good plot](https://datatrail-jhu.github.io/DataTrail/good-plots.html) <br> - [Start Data Viz exercise 1](https://github.com/datatrail-jhu/office-hours-exercises/blob/main/dataviz_exercises/dataviz_exercise_1_unsolved.Rmd) | - Be comfortable with the goal of data viz <br> - Understand the basic formula of ggplots|
+|Office Hours 14| [Plotting the data 2](https://datatrail-jhu.github.io/DataTrail/plotting-the-data.html)| - [Start up data viz exercise 2](https://github.com/datatrail-jhu/office-hours-exercises/blob/main/dataviz_exercises/dataviz_exercise_2_unsolved.Rmd)| Becoming comfortable with ggplot2
+|Office Hours 15| [Plotting the data 3](https://datatrail-jhu.github.io/DataTrail/plotting-the-data.html)| - [Start up data viz exercise 3](https://github.com/datatrail-jhu/office-hours-exercises/blob/main/dataviz_exercises/Data_Visualization_Lab.Rmd)| Further becoming comfortable with ggplot2|
+|Office Hours 16| [Plotting the data 4](https://datatrail-jhu.github.io/DataTrail/plotting-the-data.html)| - Wrap up any of the unfinished data viz exercises <br> - Introduce [Plotting the data Project](https://datatrail-jhu.github.io/DataTrail/plotting-data-project.html)| - Being able to ask a question and then make a viz to answer it|
+|Office Hours 17|[Getting Statistics 1](https://datatrail-jhu.github.io/DataTrail/getting-statistics.html)|
+|Office Hours 18|[Getting Statistics 2](https://datatrail-jhu.github.io/DataTrail/getting-statistics.html)|
+|Office Hours 19| [Getting Statistics 3](https://datatrail-jhu.github.io/DataTrail/getting-statistics.html)|
+|Office Hours 20|[Getting Statistics 4](https://datatrail-jhu.github.io/DataTrail/getting-statistics.html)|
 |Office Hours 21
 |Office Hours 22
 |Office Hours 23
