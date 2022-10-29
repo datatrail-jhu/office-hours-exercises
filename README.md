@@ -2,7 +2,7 @@
 
 Your responsibilities as a DataTrail tutor:
 
-- Attending and leading office hours - have an exercise ready but also leave lots of time for questions. There are [office hours exercises you can use here](https://github.com/datatrail-jhu/office-hours-exercises) or make up your own depending on the needs of the cohort.
+- Attending and leading office hours - have an exercise ready but also leave lots of time for questions. Here's a suggested schedule [office hours exercises you can use here](./suggested-schedule.md)
 - Responding to student questions inside or outside of office hours.
 - Tracking or making fixes to curriculum as needed
 - Helping Ashley track the student's progress in the course using the Scholar Tracking Sheet.
