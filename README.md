@@ -19,7 +19,7 @@ Your responsibilities as a DataTrail tutor:
 - [ ] [Scholar Tracking sheet template](https://docs.google.com/spreadsheets/d/1FZ2bgBvaadZqY4ver-34m7WB1P9TAE-bQZ4Ps9fSusQ/edit#gid=0) (this will be cohort specific)
 
 ### For course edits:
-- [ ] DataTrail Leanpub course: `datatrailteam@gmail.com` password: `DataAreFunYay!`
+- [ ] DataTrail Leanpub course: `datatrailteam@gmail.com` password: `VRy.G7*iDp$86_q`
   - Go to Author > Courses > DataTrail
 - [ ] [DataTrail GitHub organization](https://github.com/datatrail-jhu)
 - [ ] [DataTrail Google Drive folder](https://drive.google.com/drive/folders/1llAQt0f5Pu_wF1e5hc40cdpqUnOHpDo3)
