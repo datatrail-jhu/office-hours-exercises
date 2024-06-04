@@ -1,0 +1,82 @@
+---
+title: "GitHub Workflow"
+output: html_document
+date: "2024-06-04"
+---
+
+These steps are talked about in more detail in the book:
+
+- https://datatrail-jhu.github.io/DataTrail/creating-a-repository.html
+- https://datatrail-jhu.github.io/DataTrail/cloning-a-repository.html
+- https://datatrail-jhu.github.io/DataTrail/pushing-and-pulling-changes.html
+
+## Steps for linking GitHub to Posit Cloud
+
+Github is a really powerful opensource website that works with git, a version control system.
+
+To use it in posit cloud we need to set up credentials with our github account.
+
+Let's use the `usethis` package to help us link to our GitHub account.
+
+Only need to do this once per project.
+
+```{r}
+install.packages("usethis")
+library("usethis")
+```
+
+We need to set up credentials.
+
+We'll create a Personal Access Token
+```
+usethis::create_github_token()
+```
+
+We'll give posit cloud this token
+```
+gitcreds::gitcreds_set()
+```
+
+We'll also give our user name and email.
+```
+use_git_config(user.name = "cansavvy", user.email = "cansav09@gmail.com")
+```
+
+We can run this function to double check we've set this up.
+
+```{r}
+git_sitrep()
+```
+
+
+## Rundown on GitHub vocab
+
+Repository = house for your project files
+Cloning = Making a copy of the repository for posit cloud (or wherever you are working)
+Personal Access Token = A key or fancy password to give us access to GitHub
+Commit = Adding some file changes to a branch
+Pushing = A transfer of files from where we are working to GitHub
+
+## Creating a pull request
+
+Create a new branch to work from. (that's different than the default main branch).
+
+```{r}
+pr_init(branch = "new-branch")
+```
+
+Make a file change (and save it).
+
+In the Git tab, check the "staged" box next to the file change you made.
+
+Click the commit button.
+Write a descriptive commit message.
+Click "commit". Now we can close this window.
+
+```{r}
+pr_push()
+```
+
+This will open up a window in Github that creates a pull request.
+
+Pull Request = Its a method to suggest changes to the files
