@@ -1,0 +1,57 @@
+---
+title: "Final Project Example"
+output: html_document
+date: "2024-06-11"
+---
+
+```{r}
+library(tidyverse)
+```
+
+## Final Project Example
+
+- Think about what kind of data you’d like to work with
+  -  Pick a topic you are interested in! This will help you with motivation and you will also have more background knowledge to start with!
+  - E.g. Davon’s chess analysis
+- [Look for datasets that are about this topic](https://datatrail-jhu.github.io/open-datasets/)
+- In each dataset, see what variables are there and what questions you might ask about them. Reference [Practice in Stats chapter](https://datatrail-jhu.github.io/DataTrail/in-practice-using-stats.html) to guide you through initial explorations. Starting with tables and distributions is a great idea
+- If the data is too difficult to work with, don’t hesitate to look for a different one!
+- Go to your [final_project instructions](https://datatrail-jhu.github.io/DataTrail/github-and-final-data-project.html) to start to dig into the dataset you have of interest and follow the instructions there.
+- Message instructors for help when you are feeling stuck!!!
+
+## Frog dataset example
+
+We found a dataset on Kaggle by searching for frogs.
+This dataset is from Kaggle from here:
+https://www.kaggle.com/datasets/ishandutta/amphibians-data-set?resource=download
+
+
+We practiced importing these data.
+
+```{r}
+frogs_df <- read_delim("data/dataset.csv", delim = ";",
+    escape_double = FALSE, trim_ws = TRUE,
+    skip = 1)
+```
+
+
+## Question Ideas
+
+Browse the information about the dataset and the variables available to you to start brainstorming question ideas!
+
+We discussed question ideas for this data set
+
+- Vegetation type and does it interact with what species hangout there? Do different species hangout in differeng vegetation areas?
+- Is there species differences for Type of water resevior?
+- which highway has more frogs
+- how are frog populations affected by presense of fishing?
+- frog size vs environment
+- color vs relationships?
+
+## Start off with table and distributions to explore!
+
+```{r}
+frogs_df %>%
+  dplyr::select(VR, `Green frogs`, `Brown frogs`, `Common toad`) %>%
+knitr::kable()
+```
