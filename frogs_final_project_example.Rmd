@@ -55,3 +55,10 @@ frogs_df %>%
   dplyr::select(VR, `Green frogs`, `Brown frogs`, `Common toad`) %>%
 knitr::kable()
 ```
+
+## Next steps: 
+
+Now each person in class should think of two topics they are interested in analyzing. 
+
+For one of those topics, find two dataset potentials. We are here to help you search!
+
